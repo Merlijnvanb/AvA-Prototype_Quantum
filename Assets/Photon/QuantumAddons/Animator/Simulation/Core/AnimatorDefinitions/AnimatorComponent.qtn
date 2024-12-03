@@ -1,0 +1,49 @@
+﻿[CodeGen(UnityWrapperFolder, "Assets/Photon/QuantumAddons/Animator/View/Generated")]
+component AnimatorComponent{
+	asset_ref<AnimatorGraph> AnimatorGraph;
+	EntityRef Self;
+	
+	[HideInInspector] FP Time;
+	[HideInInspector] FP NormalizedTime;
+	[HideInInspector] FP LastTime;
+	[HideInInspector] FP Length;
+	[HideInInspector] Int32 CurrentStateId;
+	[HideInInspector] Boolean Freeze;
+	[HideInInspector] FP Speed;
+
+	[HideInInspector] Int32 FromStateId;
+	[HideInInspector] FP FromStateTime;
+	[HideInInspector] FP FromStateLastTime;
+	[HideInInspector] FP FromStateNormalizedTime;
+	[HideInInspector] FP FromLength;
+
+	[HideInInspector] Int32 ToStateId;
+	[HideInInspector] FP ToStateTime;
+	[HideInInspector] FP ToStateLastTime;
+	[HideInInspector] FP ToStateNormalizedTime;
+	[HideInInspector] FP ToLength;
+
+	[HideInInspector] Int32 TransitionIndex;
+	[HideInInspector] FP TransitionTime;
+	[HideInInspector] FP TransitionDuration;
+	[HideInInspector] Int32 AnimatorBlendCount;
+	
+    QBoolean IgnoreTransitions;
+
+	[HideInInspector] list<AnimatorRuntimeVariable> AnimatorVariables;
+
+    // <state id, weights>
+    [HideInInspector] dictionary<int, BlendTreeWeights> BlendTreeWeights;
+}
+
+struct BlendTreeWeights
+{
+    list<FP> Values;
+}
+
+union AnimatorRuntimeVariable{
+	FP FPValue;
+	Int32 IntegerValue;
+	Boolean BooleanValue;
+}
+

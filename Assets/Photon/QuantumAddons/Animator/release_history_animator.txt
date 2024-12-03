@@ -1,0 +1,28 @@
+Nov 13, 2024
+Quantum Animator 3.0.2 Alpha
+
+What's New:
+ - New TimeWindowEvent API.
+ - Improvements of Graph Inspector states.
+ - Improvements if FadeTo API.
+
+Fixed:
+ - Duplicated events call.
+ - Fixed issue when running graph with no variables.
+
+
+Sep 20, 2024
+Quantum Animator 3.0.1 Alpha
+
+What's New:
+ - OnEnter and OnExit on time-window events.
+ - Improvements on AnimatorGraph UX.
+
+Fixed:
+ - Empty motion bug on baking blend tree.
+ - Bug when baking graph with no controller attached.
+
+Aug 26, 2024
+Quantum Animator 3.0.0 Alpha
+
+- Initial release

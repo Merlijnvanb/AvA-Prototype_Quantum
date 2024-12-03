@@ -1,0 +1,16 @@
+global
+{
+    bool ParseInputs;
+
+    FP StageWidth;
+    FP MaxFighterDistance;
+    
+    int PreRoundTimer;
+    int RoundTimer;
+    
+    entity_ref Fighter1;
+    entity_ref Fighter2;
+    
+    int Fighter1Score;
+    int Fighter2Score;
+}

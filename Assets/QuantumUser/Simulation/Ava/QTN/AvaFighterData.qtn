@@ -1,0 +1,49 @@
+component FighterData
+{
+    asset_ref<FighterConstants> Constants;
+
+    FPVector2 Position;
+    FPVector2 Velocity;
+    FPVector2 Pushback;
+    bool IsFacingRight;
+    bool IsGrounded;
+    
+    int Health;
+    int HitStun;
+    int BlockStun;
+    
+    StateID CurrentState;
+    int StateFrame;
+    int StateDuration;
+    
+    list<HitBox> HitBoxList;
+    list<HurtBox> HurtBoxList;
+    PushBox PushBox;
+}
+
+struct HitBox : BoxBase
+{
+    bool Proximity;
+    int HitNum;
+    asset_ref HitData;
+}
+
+struct HurtBox : BoxBase
+{
+    asset_ref HurtData;
+}
+
+struct PushBox : BoxBase
+{
+}
+
+struct BoxBase
+{
+    FPVector2 RectPos;
+    FPVector2 RectWH;
+    
+    FP XMin;
+    FP XMax;
+    FP YMin;
+    FP YMax;
+}

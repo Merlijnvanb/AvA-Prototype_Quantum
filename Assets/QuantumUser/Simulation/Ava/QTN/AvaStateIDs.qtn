@@ -1,0 +1,53 @@
+enum StateID
+{
+    // Basic
+    STAND,
+    CROUCH,
+    FORWARD,
+    BACKWARD,
+    
+    // Dash
+    DASH_FORWARD,
+    DASH_BACKWARD,
+    
+    // Jump
+    JUMP_NEUTRAL,
+    JUMP_FORWARD,
+    JUMP_BACKWARD,
+    
+    // Standing Attack
+    STAND_LIGHT,
+    STAND_MEDIUM,
+    STAND_HEAVY,
+    STAND_SPECIAL,
+    
+    // Crouching Attack
+    CROUCH_LIGHT,
+    CROUCH_MEDIUM,
+    CROUCH_HEAVY,
+    CROUCH_SPECIAL,
+    
+    // Guard States
+    PROXIMITY_STANDING,
+    PROXIMITY_CROUCHING,
+    BLOCK_STANDING,
+    BLOCK_CROUCHING,
+    
+    // Hit States
+    HITSTUN,
+    LAUNCHED,
+    HARD_KNOCKDOWN,
+    SOFT_KNOCKDOWN,
+}
+
+enum AttackID
+{
+    STAND_LIGHT,
+    STAND_MEDIUM,
+    STAND_HEAVY,
+    STAND_SPECIAL,
+    CROUCH_LIGHT,
+    CROUCH_MEDIUM,
+    CROUCH_HEAVY,
+    CROUCH_SPECIAL,
+}

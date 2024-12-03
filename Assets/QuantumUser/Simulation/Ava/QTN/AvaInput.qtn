@@ -1,0 +1,10 @@
+input {
+    button Left;
+    button Right;
+    button Up;
+    button Down;
+    button Light;
+    button Medium;
+    button Heavy;
+    button Special;
+}
