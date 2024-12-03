@@ -15,7 +15,9 @@ namespace Quantum.Ava
             var fighterEntity = f.Create(entityPrototypeAsset);
             
             var fighterData = f.Unsafe.GetPointer<FighterData>(fighterEntity);
-            fighterData->Constants = data.FighterConstants;
+            var constants = f.FindAsset<FighterConstants>(data.FighterConstants);
+            constants.SetupDictionaries();
+            fighterData->Constants = constants;
             
             Transform3D* fighterTransform = f.Unsafe.GetPointer<Transform3D>(fighterEntity);
 

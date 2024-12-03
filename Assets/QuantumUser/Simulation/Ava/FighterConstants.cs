@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace Quantum
 {
     using Photon.Deterministic;
@@ -22,13 +25,17 @@ namespace Quantum
         
         public FPVector2 BasePushBoxRectPos;
         public FPVector2 BasePushBoxRectWH;
-        
-        //public 
 
-        public void GetState(Frame f)
+        [SerializeField]
+        private StateDataContainer stateDataContainer;
+        
+        public Dictionary<StateID, StateData> States => states;
+        private Dictionary<StateID, StateData> states = new Dictionary<StateID, StateData>();
+
+        public void SetupDictionaries()
         {
-            Log.LogLevel = LogType.Debug;
-            Log.Debug("Retreived state.");
+            foreach (var state in stateDataContainer.States)
+                states.TryAdd(state.StateID, state);
         }
     }
 }

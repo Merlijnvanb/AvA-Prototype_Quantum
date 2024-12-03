@@ -71,6 +71,7 @@ namespace Quantum.Ava
             
             // if isAlwaysCancelable request state and return true
             
+            
             return false;
         }
 
