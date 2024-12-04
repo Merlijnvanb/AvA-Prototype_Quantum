@@ -1064,9 +1064,9 @@ namespace Quantum {
     public FPVector2 Velocity;
     [FieldOffset(64)]
     public FPVector2 Pushback;
-    [FieldOffset(20)]
+    [FieldOffset(16)]
     public QBoolean IsFacingRight;
-    [FieldOffset(24)]
+    [FieldOffset(20)]
     public QBoolean IsGrounded;
     [FieldOffset(4)]
     public Int32 Health;
@@ -1074,15 +1074,13 @@ namespace Quantum {
     public Int32 HitStun;
     [FieldOffset(0)]
     public Int32 BlockStun;
-    [FieldOffset(36)]
-    public StateID CurrentState;
-    [FieldOffset(16)]
-    public Int32 StateFrame;
-    [FieldOffset(12)]
-    public Int32 StateDuration;
-    [FieldOffset(28)]
-    public QListPtr<HitBox> HitBoxList;
     [FieldOffset(32)]
+    public StateID CurrentState;
+    [FieldOffset(12)]
+    public Int32 StateFrame;
+    [FieldOffset(24)]
+    public QListPtr<HitBox> HitBoxList;
+    [FieldOffset(28)]
     public QListPtr<HurtBox> HurtBoxList;
     [FieldOffset(96)]
     public PushBox PushBox;
@@ -1100,7 +1098,6 @@ namespace Quantum {
         hash = hash * 31 + BlockStun.GetHashCode();
         hash = hash * 31 + (Int32)CurrentState;
         hash = hash * 31 + StateFrame.GetHashCode();
-        hash = hash * 31 + StateDuration.GetHashCode();
         hash = hash * 31 + HitBoxList.GetHashCode();
         hash = hash * 31 + HurtBoxList.GetHashCode();
         hash = hash * 31 + PushBox.GetHashCode();
@@ -1120,7 +1117,6 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->BlockStun);
         serializer.Stream.Serialize(&p->Health);
         serializer.Stream.Serialize(&p->HitStun);
-        serializer.Stream.Serialize(&p->StateDuration);
         serializer.Stream.Serialize(&p->StateFrame);
         QBoolean.Serialize(&p->IsFacingRight, serializer);
         QBoolean.Serialize(&p->IsGrounded, serializer);

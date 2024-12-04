@@ -27,6 +27,9 @@ namespace Quantum.Ava
             }
             
             UpdateFighters(f, ref filter, input);
+            
+            Log.LogLevel = LogType.Debug;
+            Log.Debug(filter.FighterData->CurrentState.ToString());
         }
 
         public struct Filter
@@ -58,10 +61,10 @@ namespace Quantum.Ava
 
             FPVector3 position = filter.Transform->Position;
 
-            if (input->Left)
+            if (fighterData->CurrentState == StateID.BACKWARD)
                 position.X += -constants.BackWalkSpeed * deltaTime;
 
-            if (input->Right)
+            if (fighterData->CurrentState == StateID.FORWARD)
                 position.X += constants.ForwardWalkSpeed * deltaTime;
             
             filter.Transform->Teleport(f, position);

@@ -237,7 +237,6 @@ namespace Quantum.Prototypes {
     public Int32 BlockStun;
     public Quantum.QEnum32<StateID> CurrentState;
     public Int32 StateFrame;
-    public Int32 StateDuration;
     [DynamicCollectionAttribute()]
     public Quantum.Prototypes.HitBoxPrototype[] HitBoxList = {};
     [DynamicCollectionAttribute()]
@@ -261,7 +260,6 @@ namespace Quantum.Prototypes {
         result.BlockStun = this.BlockStun;
         result.CurrentState = this.CurrentState;
         result.StateFrame = this.StateFrame;
-        result.StateDuration = this.StateDuration;
         if (this.HitBoxList.Length == 0) {
           result.HitBoxList = default;
         } else {

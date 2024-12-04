@@ -14,7 +14,6 @@ component FighterData
     
     StateID CurrentState;
     int StateFrame;
-    int StateDuration;
     
     list<HitBox> HitBoxList;
     list<HurtBox> HurtBoxList;

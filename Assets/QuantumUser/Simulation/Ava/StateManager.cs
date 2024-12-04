@@ -31,36 +31,56 @@ namespace Quantum.Ava
                     input->Special = false;
                 }
             }
+            var fData = filter.FighterData;
+            var fConstants = f.FindAsset(fData->Constants);
+            //fConstants.SetupDictionaries();
+            
+            if (CheckAttackState(fData, fConstants, input)) return;
+            if (CheckJumpState(fData, fConstants, input)) return;
+            if (CheckDashState(fData, fConstants, input)) return;
+            if (CheckMovementState(fData, fConstants, input)) return;
 
-            if (CheckAttackState(input)) return;
-            if (CheckJumpState(input)) return;
-            if (CheckDashState(input)) return;
-            if (CheckMovementState(input)) return;
+            RequestState(fData, fConstants, StateID.STAND);
         }
 
-        private bool CheckAttackState(Input* input)
+        private bool CheckAttackState(FighterData* fd, FighterConstants fc, Input* input)
         {
             return false;
         }
 
-        private bool CheckJumpState(Input* input)
+        private bool CheckJumpState(FighterData* fd, FighterConstants fc, Input* input)
         {
             return false;
         }
 
-        private bool CheckDashState(Input* input)
+        private bool CheckDashState(FighterData* fd, FighterConstants fc, Input* input)
         {
             return false;
         }
 
-        private bool CheckMovementState(Input* input)
+        private bool CheckMovementState(FighterData* fd, FighterConstants fc, Input* input)
         {
+            if (input->Down)
+            {
+                RequestState(fd, fc, StateID.CROUCH);
+                return true;
+            }
+            if (input->Right)
+            {
+                RequestState(fd, fc, StateID.FORWARD);
+                return true;
+            }
+            if (input->Left)
+            {
+                RequestState(fd, fc, StateID.BACKWARD);
+                return true;
+            }
             return false;
         }
 
-        private bool RequestState(FighterData* fd, StateID stateID)
+        private bool RequestState(FighterData* fd, FighterConstants fc, StateID stateID)
         {
-            if (fd->StateFrame >= fd->StateDuration)
+            if (fd->StateFrame >= fc.States[fd->CurrentState].FrameCount)
             {
                 SetCurrentState(fd, stateID);
                 return true;
@@ -69,8 +89,11 @@ namespace Quantum.Ava
             if (fd->CurrentState == stateID)
                 return false;
             
-            // if isAlwaysCancelable request state and return true
-            
+            if (fc.States[fd->CurrentState].IsAlwaysCancelable)
+            {
+                SetCurrentState(fd, stateID);
+                return true;
+            }
             
             return false;
         }

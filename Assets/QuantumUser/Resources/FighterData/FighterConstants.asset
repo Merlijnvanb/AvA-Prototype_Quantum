@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FighterConstants
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/FighterConstants
+    Path: QuantumUser/Resources/FighterData/FighterConstants
     Guid:
       Value: 488114196162400296
   MaxHealth: 1000
@@ -29,21 +29,24 @@ MonoBehaviour:
     RawValue: 42598
   SideSwitchThreshold:
     RawValue: 6554
-  BaseHurtBoxRect:
+  BaseHurtBoxRectPos:
     X:
       RawValue: 0
     Y:
       RawValue: 0
-    Z:
-      RawValue: 0
-    W:
-      RawValue: 0
-  BasePushBoxRect:
+  BaseHurtBoxRectWH:
+    X:
+      RawValue: 32768
+    Y:
+      RawValue: 65536
+  BasePushBoxRectPos:
     X:
       RawValue: 0
     Y:
       RawValue: 0
-    Z:
-      RawValue: 0
-    W:
-      RawValue: 0
+  BasePushBoxRectWH:
+    X:
+      RawValue: 22938
+    Y:
+      RawValue: 39322
+  stateDataContainer: {fileID: 11400000, guid: e6287505e243158429d6dc966dee68d6, type: 2}

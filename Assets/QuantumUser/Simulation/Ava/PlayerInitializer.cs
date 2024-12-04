@@ -13,12 +13,12 @@ namespace Quantum.Ava
             var entityPrototypeAsset = f.FindAsset<EntityPrototype>(data.PlayerAvatar);
 
             var fighterEntity = f.Create(entityPrototypeAsset);
-            
+
             var fighterData = f.Unsafe.GetPointer<FighterData>(fighterEntity);
             var constants = f.FindAsset<FighterConstants>(data.FighterConstants);
             constants.SetupDictionaries();
             fighterData->Constants = constants;
-            
+
             Transform3D* fighterTransform = f.Unsafe.GetPointer<Transform3D>(fighterEntity);
 
             if (player._index == 1)

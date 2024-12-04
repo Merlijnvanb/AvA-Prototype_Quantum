@@ -29,7 +29,7 @@ namespace Quantum.Ava
                 f.Global->ParseInputs = true;
 
             Log.LogLevel = LogType.Debug;
-            Log.Debug(f.Global->PreRoundTimer);
+            //Log.Debug(f.Global->PreRoundTimer);
         }
     }
 }
