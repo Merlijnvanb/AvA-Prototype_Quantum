@@ -5,6 +5,13 @@ global
     FP StageWidth;
     FP MaxFighterDistance;
     
+    int DashAllowFrames;
+    int JumpAlterFrames;
+    
+    FP DownwardForce;
+    FP FrictionCoefficient;
+    FP SideSwitchThreshold;
+    
     int PreRoundTimer;
     int RoundTimer;
     

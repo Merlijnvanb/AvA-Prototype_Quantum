@@ -713,7 +713,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct _globals_ {
-    public const Int32 SIZE = 1192;
+    public const Int32 SIZE = 1224;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public AssetRef<Map> Map;
@@ -740,23 +740,33 @@ namespace Quantum {
     private fixed Byte _input_[576];
     [FieldOffset(1128)]
     public BitSet6 PlayerLastConnectionState;
-    [FieldOffset(1152)]
-    public QBoolean ParseInputs;
-    [FieldOffset(1184)]
-    public FP StageWidth;
-    [FieldOffset(1176)]
-    public FP MaxFighterDistance;
-    [FieldOffset(1144)]
-    public Int32 PreRoundTimer;
-    [FieldOffset(1148)]
-    public Int32 RoundTimer;
     [FieldOffset(1160)]
-    public EntityRef Fighter1;
-    [FieldOffset(1168)]
-    public EntityRef Fighter2;
+    public QBoolean ParseInputs;
+    [FieldOffset(1216)]
+    public FP StageWidth;
+    [FieldOffset(1200)]
+    public FP MaxFighterDistance;
     [FieldOffset(1136)]
-    public Int32 Fighter1Score;
+    public Int32 DashAllowFrames;
+    [FieldOffset(1148)]
+    public Int32 JumpAlterFrames;
+    [FieldOffset(1184)]
+    public FP DownwardForce;
+    [FieldOffset(1192)]
+    public FP FrictionCoefficient;
+    [FieldOffset(1208)]
+    public FP SideSwitchThreshold;
+    [FieldOffset(1152)]
+    public Int32 PreRoundTimer;
+    [FieldOffset(1156)]
+    public Int32 RoundTimer;
+    [FieldOffset(1168)]
+    public EntityRef Fighter1;
+    [FieldOffset(1176)]
+    public EntityRef Fighter2;
     [FieldOffset(1140)]
+    public Int32 Fighter1Score;
+    [FieldOffset(1144)]
     public Int32 Fighter2Score;
     public FixedArray<Input> input {
       get {
@@ -781,6 +791,11 @@ namespace Quantum {
         hash = hash * 31 + ParseInputs.GetHashCode();
         hash = hash * 31 + StageWidth.GetHashCode();
         hash = hash * 31 + MaxFighterDistance.GetHashCode();
+        hash = hash * 31 + DashAllowFrames.GetHashCode();
+        hash = hash * 31 + JumpAlterFrames.GetHashCode();
+        hash = hash * 31 + DownwardForce.GetHashCode();
+        hash = hash * 31 + FrictionCoefficient.GetHashCode();
+        hash = hash * 31 + SideSwitchThreshold.GetHashCode();
         hash = hash * 31 + PreRoundTimer.GetHashCode();
         hash = hash * 31 + RoundTimer.GetHashCode();
         hash = hash * 31 + Fighter1.GetHashCode();
@@ -804,14 +819,19 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->PlayerConnectedCount);
         FixedArray.Serialize(p->input, serializer, Statics.SerializeInput);
         Quantum.BitSet6.Serialize(&p->PlayerLastConnectionState, serializer);
+        serializer.Stream.Serialize(&p->DashAllowFrames);
         serializer.Stream.Serialize(&p->Fighter1Score);
         serializer.Stream.Serialize(&p->Fighter2Score);
+        serializer.Stream.Serialize(&p->JumpAlterFrames);
         serializer.Stream.Serialize(&p->PreRoundTimer);
         serializer.Stream.Serialize(&p->RoundTimer);
         QBoolean.Serialize(&p->ParseInputs, serializer);
         EntityRef.Serialize(&p->Fighter1, serializer);
         EntityRef.Serialize(&p->Fighter2, serializer);
+        FP.Serialize(&p->DownwardForce, serializer);
+        FP.Serialize(&p->FrictionCoefficient, serializer);
         FP.Serialize(&p->MaxFighterDistance, serializer);
+        FP.Serialize(&p->SideSwitchThreshold, serializer);
         FP.Serialize(&p->StageWidth, serializer);
     }
   }
@@ -1064,23 +1084,25 @@ namespace Quantum {
     public FPVector2 Velocity;
     [FieldOffset(64)]
     public FPVector2 Pushback;
-    [FieldOffset(16)]
-    public QBoolean IsFacingRight;
     [FieldOffset(20)]
+    public QBoolean IsFacingRight;
+    [FieldOffset(24)]
     public QBoolean IsGrounded;
+    [FieldOffset(16)]
+    public Int32 requestedSideSwitch;
     [FieldOffset(4)]
     public Int32 Health;
     [FieldOffset(8)]
     public Int32 HitStun;
     [FieldOffset(0)]
     public Int32 BlockStun;
-    [FieldOffset(32)]
+    [FieldOffset(36)]
     public StateID CurrentState;
     [FieldOffset(12)]
     public Int32 StateFrame;
-    [FieldOffset(24)]
-    public QListPtr<HitBox> HitBoxList;
     [FieldOffset(28)]
+    public QListPtr<HitBox> HitBoxList;
+    [FieldOffset(32)]
     public QListPtr<HurtBox> HurtBoxList;
     [FieldOffset(96)]
     public PushBox PushBox;
@@ -1093,6 +1115,7 @@ namespace Quantum {
         hash = hash * 31 + Pushback.GetHashCode();
         hash = hash * 31 + IsFacingRight.GetHashCode();
         hash = hash * 31 + IsGrounded.GetHashCode();
+        hash = hash * 31 + requestedSideSwitch.GetHashCode();
         hash = hash * 31 + Health.GetHashCode();
         hash = hash * 31 + HitStun.GetHashCode();
         hash = hash * 31 + BlockStun.GetHashCode();
@@ -1118,6 +1141,7 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->Health);
         serializer.Stream.Serialize(&p->HitStun);
         serializer.Stream.Serialize(&p->StateFrame);
+        serializer.Stream.Serialize(&p->requestedSideSwitch);
         QBoolean.Serialize(&p->IsFacingRight, serializer);
         QBoolean.Serialize(&p->IsGrounded, serializer);
         QList.Serialize(&p->HitBoxList, serializer, Statics.SerializeHitBox);

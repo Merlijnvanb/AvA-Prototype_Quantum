@@ -232,6 +232,7 @@ namespace Quantum.Prototypes {
     public FPVector2 Pushback;
     public QBoolean IsFacingRight;
     public QBoolean IsGrounded;
+    public Int32 requestedSideSwitch;
     public Int32 Health;
     public Int32 HitStun;
     public Int32 BlockStun;
@@ -255,6 +256,7 @@ namespace Quantum.Prototypes {
         result.Pushback = this.Pushback;
         result.IsFacingRight = this.IsFacingRight;
         result.IsGrounded = this.IsGrounded;
+        result.requestedSideSwitch = this.requestedSideSwitch;
         result.Health = this.Health;
         result.HitStun = this.HitStun;
         result.BlockStun = this.BlockStun;

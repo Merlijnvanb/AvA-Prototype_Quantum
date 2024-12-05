@@ -8,6 +8,8 @@ component FighterData
     bool IsFacingRight;
     bool IsGrounded;
     
+    int requestedSideSwitch;
+    
     int Health;
     int HitStun;
     int BlockStun;

@@ -8,25 +8,7 @@ namespace Quantum.Ava
     {
         public override void Update(Frame f, ref Filter filter)
         {
-            Input* input = default;
-            if (f.Unsafe.TryGetPointer(filter.Entity, out PlayerLink* playerLink))
-            {
-                input = f.GetPlayerInput(playerLink->PlayerRef);
-
-                if (!f.Global->ParseInputs)
-                {
-                    input->Up = false;
-                    input->Down = false;
-                    input->Left = false;
-                    input->Right = false;
-                    input->Light = false;
-                    input->Medium = false;
-                    input->Heavy = false;
-                    input->Special = false;
-                }
-            }
-            
-            UpdateFighters(f, ref filter, input);
+            UpdateFighters(f, ref filter);
             
             Log.LogLevel = LogType.Debug;
             Log.Debug(filter.FighterData->CurrentState.ToString());
@@ -39,35 +21,46 @@ namespace Quantum.Ava
             public FighterData* FighterData;
         }
 
-        private void UpdateFighters(Frame f, ref Filter filter, Input* input)
+        private void UpdateFighters(Frame f, ref Filter filter)
         {
-            Log.LogLevel = LogType.Debug;
+            UpdateFacing(f, ref filter);
             
-            
-            UpdateMovement(f, ref filter, input);
+            StateManager.UpdateState(f, ref filter);
+            UpdateMovement(f, ref filter);
         }
 
-        private void UpdateState()
+        private void UpdateFacing(Frame f, ref Filter filter)
         {
-            
+            var fd = filter.FighterData;
+            var constants = f.FindAsset<FighterConstants>(fd->Constants);
+
+            if (fd->requestedSideSwitch != 0 && (fd->StateFrame > constants.States[fd->CurrentState].FrameCount ||
+                                                 constants.States[fd->CurrentState].IsAlwaysCancelable))
+            {
+                fd->IsFacingRight = fd->requestedSideSwitch == 1;
+                fd->requestedSideSwitch = 0;
+            }
         }
 
-        private void UpdateMovement(Frame f, ref Filter filter, Input* input)
+        private void UpdateMovement(Frame f, ref Filter filter)
         {
             var deltaTime = f.DeltaTime;
             
             var fighterData = filter.FighterData;
-            var constants = f.FindAsset(fighterData->Constants);
-
-            FPVector3 position = filter.Transform->Position;
+            var constants = f.FindAsset<FighterConstants>(fighterData->Constants);
 
             if (fighterData->CurrentState == StateID.BACKWARD)
-                position.X += -constants.BackWalkSpeed * deltaTime;
+                fighterData->Position.X += -constants.BackWalkSpeed * deltaTime;
 
             if (fighterData->CurrentState == StateID.FORWARD)
-                position.X += constants.ForwardWalkSpeed * deltaTime;
+                fighterData->Position.X += constants.ForwardWalkSpeed * deltaTime;
             
-            filter.Transform->Teleport(f, position);
+            filter.Transform->Teleport(f, new FPVector3(fighterData->Position.X, fighterData->Position.Y, 0));
+            
+            if (fighterData->IsFacingRight)
+                filter.Transform->Rotation.Y = 0;
+            else if (!fighterData->IsFacingRight)
+                filter.Transform->Rotation.Y = 180;
         }
     }
 }

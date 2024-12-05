@@ -716,6 +716,13 @@ MonoBehaviour:
     FighterConstants:
       Id:
         Value: 488114196162400296
+  - PlayerAvatar:
+      Id:
+        Value: 1349895863255627100
+    PlayerNickname: 
+    FighterConstants:
+      Id:
+        Value: 488114196162400296
   MaxPlayerCount: 2
   SimulationSpeedMultiplier: 1
   DisplaySaveAndReloadButton: 0

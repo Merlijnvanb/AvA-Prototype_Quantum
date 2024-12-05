@@ -12,6 +12,14 @@ namespace Quantum.Ava
 
         public int PreRoundTimer = 3 * 60;
         public int RoundTimer = 50 * 60;
+        
+        public int DashAllowFrames = 10;
+        public int JumpAlterFrames = 4;
+
+        public FP DownwardForce = 13;
+        public FP FrictionCoefficient = FP._0_75;
+
+        public FP SideSwitchThreshold = FP._0_10;
 
     }
 }

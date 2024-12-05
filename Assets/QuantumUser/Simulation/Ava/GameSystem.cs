@@ -10,13 +10,13 @@ namespace Quantum.Ava
         {
             var gameConfig = f.FindAsset<AvaGameConfig>(f.RuntimeConfig.GameConfig);
             f.Global->ParseInputs = false;
-            
             f.Global->StageWidth = gameConfig.StageWidth;
             f.Global->MaxFighterDistance = gameConfig.MaxPlayerDistance;
-            
+            f.Global->DownwardForce = gameConfig.DownwardForce;
+            f.Global->FrictionCoefficient = gameConfig.FrictionCoefficient;
+            f.Global->SideSwitchThreshold = gameConfig.SideSwitchThreshold;
             f.Global->PreRoundTimer = gameConfig.PreRoundTimer;
             f.Global->RoundTimer = gameConfig.RoundTimer;
-
             f.Global->Fighter1Score = 0;
             f.Global->Fighter2Score = 0;
         }
@@ -27,9 +27,32 @@ namespace Quantum.Ava
                 f.Global->PreRoundTimer--;
             else
                 f.Global->ParseInputs = true;
+            
+            CheckSides(f);
+        }
 
-            Log.LogLevel = LogType.Debug;
-            //Log.Debug(f.Global->PreRoundTimer);
+        private void CheckSides(Frame f)
+        {
+            if (f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter1, out var fighter1) &&
+                f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter2, out var fighter2))
+            {
+                if (fighter1->Position.X > fighter2->Position.X + f.Global->SideSwitchThreshold)
+                {
+                    // f.Signals.RequestSideSwitch(false, f.Global->Fighter1);
+                    // f.Signals.RequestSideSwitch(true, f.Global->Fighter2);
+
+                    if (fighter1->IsFacingRight) fighter1->requestedSideSwitch = 2;
+                    if (!fighter2->IsFacingRight) fighter2->requestedSideSwitch = 1;
+                }
+                else if (fighter1->Position.X < fighter2->Position.X - f.Global->SideSwitchThreshold)
+                {
+                    // f.Signals.RequestSideSwitch(true, f.Global->Fighter1);
+                    // f.Signals.RequestSideSwitch(false, f.Global->Fighter2);
+                    
+                    if (!fighter1->IsFacingRight) fighter1->requestedSideSwitch = 1;
+                    if (fighter2->IsFacingRight) fighter2->requestedSideSwitch = 2;
+                }
+            }
         }
     }
 }

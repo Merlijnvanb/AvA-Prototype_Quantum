@@ -4,15 +4,9 @@ namespace Quantum.Ava
     using UnityEngine.Scripting;
 
     [Preserve]
-    public unsafe class StateManager : SystemMainThreadFilter<StateManager.Filter>
+    public unsafe class StateManager
     {
-        public struct Filter
-        {
-            public EntityRef Entity;
-            public FighterData* FighterData;
-        }
-
-        public override void Update(Frame f, ref Filter filter)
+        public static void UpdateState(Frame f, ref FighterSystem.Filter filter)
         {
             Input* input = default;
             if (f.Unsafe.TryGetPointer(filter.Entity, out PlayerLink* playerLink))
@@ -43,22 +37,22 @@ namespace Quantum.Ava
             RequestState(fData, fConstants, StateID.STAND);
         }
 
-        private bool CheckAttackState(FighterData* fd, FighterConstants fc, Input* input)
+        private static bool CheckAttackState(FighterData* fd, FighterConstants fc, Input* input)
         {
             return false;
         }
 
-        private bool CheckJumpState(FighterData* fd, FighterConstants fc, Input* input)
+        private static bool CheckJumpState(FighterData* fd, FighterConstants fc, Input* input)
         {
             return false;
         }
 
-        private bool CheckDashState(FighterData* fd, FighterConstants fc, Input* input)
+        private static bool CheckDashState(FighterData* fd, FighterConstants fc, Input* input)
         {
             return false;
         }
 
-        private bool CheckMovementState(FighterData* fd, FighterConstants fc, Input* input)
+        private static bool CheckMovementState(FighterData* fd, FighterConstants fc, Input* input)
         {
             if (input->Down)
             {
@@ -78,7 +72,7 @@ namespace Quantum.Ava
             return false;
         }
 
-        private bool RequestState(FighterData* fd, FighterConstants fc, StateID stateID)
+        private static bool RequestState(FighterData* fd, FighterConstants fc, StateID stateID)
         {
             if (fd->StateFrame >= fc.States[fd->CurrentState].FrameCount)
             {
@@ -98,7 +92,7 @@ namespace Quantum.Ava
             return false;
         }
 
-        private void SetCurrentState(FighterData* fd, StateID stateID, int frame = 0)
+        private static void SetCurrentState(FighterData* fd, StateID stateID, int frame = 0)
         {
             fd->CurrentState = stateID;
             fd->StateFrame = frame;
