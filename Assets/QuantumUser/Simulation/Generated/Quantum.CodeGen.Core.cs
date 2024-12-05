@@ -509,7 +509,7 @@ namespace Quantum {
     public const Int32 SIZE = 80;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(68)]
-    public QBoolean Proximity;
+    public QBoolean IsProximity;
     [FieldOffset(32)]
     public FPVector2 RectPos;
     [FieldOffset(64)]
@@ -517,7 +517,7 @@ namespace Quantum {
     [FieldOffset(48)]
     public FPVector2 RectWH;
     [FieldOffset(72)]
-    public AssetRef HitData;
+    public AssetRef<AttackProperties> AttackProperties;
     [FieldOffset(8)]
     public FP XMin;
     [FieldOffset(0)]
@@ -529,11 +529,11 @@ namespace Quantum {
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 461;
-        hash = hash * 31 + Proximity.GetHashCode();
+        hash = hash * 31 + IsProximity.GetHashCode();
         hash = hash * 31 + RectPos.GetHashCode();
         hash = hash * 31 + HitNum.GetHashCode();
         hash = hash * 31 + RectWH.GetHashCode();
-        hash = hash * 31 + HitData.GetHashCode();
+        hash = hash * 31 + AttackProperties.GetHashCode();
         hash = hash * 31 + XMin.GetHashCode();
         hash = hash * 31 + XMax.GetHashCode();
         hash = hash * 31 + YMin.GetHashCode();
@@ -550,8 +550,8 @@ namespace Quantum {
         FPVector2.Serialize(&p->RectPos, serializer);
         FPVector2.Serialize(&p->RectWH, serializer);
         serializer.Stream.Serialize(&p->HitNum);
-        QBoolean.Serialize(&p->Proximity, serializer);
-        AssetRef.Serialize(&p->HitData, serializer);
+        QBoolean.Serialize(&p->IsProximity, serializer);
+        AssetRef.Serialize(&p->AttackProperties, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -560,9 +560,11 @@ namespace Quantum {
     public const Int32 SIZE = 72;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(64)]
-    public AssetRef HurtData;
+    public QBoolean IsAirborne;
     [FieldOffset(32)]
     public FPVector2 RectPos;
+    [FieldOffset(68)]
+    public QBoolean IsInvulnerable;
     [FieldOffset(48)]
     public FPVector2 RectWH;
     [FieldOffset(8)]
@@ -576,8 +578,9 @@ namespace Quantum {
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 5737;
-        hash = hash * 31 + HurtData.GetHashCode();
+        hash = hash * 31 + IsAirborne.GetHashCode();
         hash = hash * 31 + RectPos.GetHashCode();
+        hash = hash * 31 + IsInvulnerable.GetHashCode();
         hash = hash * 31 + RectWH.GetHashCode();
         hash = hash * 31 + XMin.GetHashCode();
         hash = hash * 31 + XMax.GetHashCode();
@@ -594,7 +597,8 @@ namespace Quantum {
         FP.Serialize(&p->YMin, serializer);
         FPVector2.Serialize(&p->RectPos, serializer);
         FPVector2.Serialize(&p->RectWH, serializer);
-        AssetRef.Serialize(&p->HurtData, serializer);
+        QBoolean.Serialize(&p->IsAirborne, serializer);
+        QBoolean.Serialize(&p->IsInvulnerable, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]

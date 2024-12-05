@@ -24,14 +24,15 @@ component FighterData
 
 struct HitBox : BoxBase
 {
-    bool Proximity;
+    bool IsProximity;
     int HitNum;
-    asset_ref HitData;
+    asset_ref<AttackProperties> AttackProperties;
 }
 
 struct HurtBox : BoxBase
 {
-    asset_ref HurtData;
+    bool IsAirborne;
+    bool IsInvulnerable;
 }
 
 struct PushBox : BoxBase

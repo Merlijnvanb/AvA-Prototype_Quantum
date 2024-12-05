@@ -59,12 +59,12 @@ namespace Quantum.Ava
                 RequestState(fd, fc, StateID.CROUCH);
                 return true;
             }
-            if (input->Right)
+            if (InputUtils.IsForward(input, fd))
             {
                 RequestState(fd, fc, StateID.FORWARD);
                 return true;
             }
-            if (input->Left)
+            if (InputUtils.IsBackward(input, fd))
             {
                 RequestState(fd, fc, StateID.BACKWARD);
                 return true;

@@ -1,6 +1,7 @@
 namespace Quantum
 {
     using Photon.Deterministic;
+    using System.Collections.Generic;
 
     public class StateData : AssetObject
     {
@@ -12,12 +13,61 @@ namespace Quantum
         public int FrameCount;
         public bool IsLoop;
         public int LoopFromFrame;
-        public StatusData[] Statuses;
+        public bool IsAlwaysCancelable;
         public HitboxData[] Hitboxes;
         public HurtboxData[] Hurtboxes;
         public PushboxData[] Pushboxes;
         public MovementData[] Movements;
-        public bool IsAlwaysCancelable;
+        
+        public List<HitboxData> GetHitboxData(int frame)
+        {
+            var hb = new List<HitboxData>();
+
+            foreach (var data in Hitboxes)
+            {
+                if (frame >= data.StartEndFrame.X && frame <= data.StartEndFrame.Y)
+                    hb.Add(data);
+            }
+            
+            return hb;
+        }
+
+        public List<HurtboxData> GetHurtboxData(int frame)
+        {
+            var hb = new List<HurtboxData>();
+
+            foreach (var data in Hurtboxes)
+            {
+                if (frame >= data.StartEndFrame.X && frame <= data.StartEndFrame.Y)
+                    hb.Add(data);
+            }
+            
+            return hb;
+        }
+
+        public PushboxData GetPushBoxData(int frame)
+        {
+            foreach (var data in Pushboxes)
+            {
+                if (frame >= data.StartEndFrame.X && frame <= data.StartEndFrame.Y)
+                    return data;
+            }
+            
+            return null;
+        }
+
+        public MovementData GetMovementData(int frame)
+        {
+            foreach (var data in Movements)
+            {
+                if (frame >= data.StartEndFrame.X && frame <= data.StartEndFrame.Y)
+                {
+                    return data;
+                }
+            }
+            
+            return null;
+        }
     }
     
     public abstract class FrameDataBase
@@ -26,28 +76,22 @@ namespace Quantum
     }
 
     [System.Serializable]
-    public class StatusData : FrameDataBase
-    {
-        public bool IsAirborne;
-        public bool IsInvulnerable;
-    }
-
-    [System.Serializable]
     public class HitboxData : FrameDataBase
     {
         public FPVector2 RectPos;
         public FPVector2 RectWH;
-        public AttackID AttackID;
-        public int HitNum;
-        public bool Proximity;
+        public bool IsProximity;
+        public AttackProperties AttackProperties;
     }
 
     [System.Serializable]
     public class HurtboxData : FrameDataBase
     {
-        public bool UseBaseRect;
         public FPVector2 RectPos;
         public FPVector2 RectWH;
+
+        public bool IsAirborne;
+        public bool IsInvulnerable;
     }
 
     [System.Serializable]

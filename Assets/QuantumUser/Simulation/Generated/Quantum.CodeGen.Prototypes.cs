@@ -289,22 +289,22 @@ namespace Quantum.Prototypes {
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.HitBox))]
   public unsafe partial class HitBoxPrototype : StructPrototype {
-    public QBoolean Proximity;
+    public QBoolean IsProximity;
     public FPVector2 RectPos;
     public Int32 HitNum;
     public FPVector2 RectWH;
-    public AssetRef HitData;
+    public AssetRef<AttackProperties> AttackProperties;
     public FP XMin;
     public FP XMax;
     public FP YMin;
     public FP YMax;
     partial void MaterializeUser(Frame frame, ref Quantum.HitBox result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.HitBox result, in PrototypeMaterializationContext context = default) {
-        result.Proximity = this.Proximity;
+        result.IsProximity = this.IsProximity;
         result.RectPos = this.RectPos;
         result.HitNum = this.HitNum;
         result.RectWH = this.RectWH;
-        result.HitData = this.HitData;
+        result.AttackProperties = this.AttackProperties;
         result.XMin = this.XMin;
         result.XMax = this.XMax;
         result.YMin = this.YMin;
@@ -315,8 +315,9 @@ namespace Quantum.Prototypes {
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.HurtBox))]
   public unsafe partial class HurtBoxPrototype : StructPrototype {
-    public AssetRef HurtData;
+    public QBoolean IsAirborne;
     public FPVector2 RectPos;
+    public QBoolean IsInvulnerable;
     public FPVector2 RectWH;
     public FP XMin;
     public FP XMax;
@@ -324,8 +325,9 @@ namespace Quantum.Prototypes {
     public FP YMax;
     partial void MaterializeUser(Frame frame, ref Quantum.HurtBox result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.HurtBox result, in PrototypeMaterializationContext context = default) {
-        result.HurtData = this.HurtData;
+        result.IsAirborne = this.IsAirborne;
         result.RectPos = this.RectPos;
+        result.IsInvulnerable = this.IsInvulnerable;
         result.RectWH = this.RectWH;
         result.XMin = this.XMin;
         result.XMax = this.XMax;
