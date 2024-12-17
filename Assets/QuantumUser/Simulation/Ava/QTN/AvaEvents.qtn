@@ -1,0 +1,8 @@
+event UpdateUI
+{
+    entity_ref Fighter1;
+    entity_ref Fighter2;
+    
+    int F1Score;
+    int F2Score;
+}

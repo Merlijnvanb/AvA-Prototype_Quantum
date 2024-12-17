@@ -227,11 +227,11 @@ namespace Quantum.Prototypes {
   [Quantum.Prototypes.Prototype(typeof(Quantum.FighterData))]
   public unsafe partial class FighterDataPrototype : ComponentPrototype<Quantum.FighterData> {
     public AssetRef<FighterConstants> Constants;
+    public Int32 FighterID;
     public FPVector2 Position;
     public FPVector2 Velocity;
     public FPVector2 Pushback;
     public QBoolean IsFacingRight;
-    public QBoolean IsGrounded;
     public Int32 requestedSideSwitch;
     public Int32 Health;
     public Int32 HitStun;
@@ -251,11 +251,11 @@ namespace Quantum.Prototypes {
     }
     public void Materialize(Frame frame, ref Quantum.FighterData result, in PrototypeMaterializationContext context = default) {
         result.Constants = this.Constants;
+        result.FighterID = this.FighterID;
         result.Position = this.Position;
         result.Velocity = this.Velocity;
         result.Pushback = this.Pushback;
         result.IsFacingRight = this.IsFacingRight;
-        result.IsGrounded = this.IsGrounded;
         result.requestedSideSwitch = this.requestedSideSwitch;
         result.Health = this.Health;
         result.HitStun = this.HitStun;

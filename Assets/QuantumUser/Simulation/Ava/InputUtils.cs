@@ -6,6 +6,11 @@ namespace Quantum.Ava
     [Preserve]
     public unsafe class InputUtils
     {
+        // public static bool CheckForwardDash(Input* input, FighterData* fighterData)
+        // {
+        //     
+        // }
+        
         public static bool IsForward(Input* input, FighterData* fd)
         {
             return (input->Right && fd->IsFacingRight) || (input->Left && !fd->IsFacingRight);

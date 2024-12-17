@@ -8,24 +8,72 @@ namespace Quantum.Ava
     {
         public static void UpdateMovement(Frame f, ref FighterSystem.Filter filter)
         {
-            var fighterData = filter.FighterData;
-            var constants = f.FindAsset<FighterConstants>(fighterData->Constants);
+            var fd = filter.FighterData;
+            var constants = f.FindAsset<FighterConstants>(fd->Constants);
             
             var deltaTime = f.DeltaTime;
-            var sign = fighterData->IsFacingRight ? 1 : -1;
+            var sign = fd->IsFacingRight ? 1 : -1;
 
-            if (fighterData->CurrentState == StateID.BACKWARD)
-                fighterData->Position.X += -constants.BackWalkSpeed * deltaTime * sign;
+            if (fd->CurrentState == StateID.BACKWARD)
+                fd->Position.X += -constants.BackWalkSpeed * deltaTime * sign;
 
-            if (fighterData->CurrentState == StateID.FORWARD)
-                fighterData->Position.X += constants.ForwardWalkSpeed * deltaTime * sign;
-            
-            filter.Transform->Teleport(f, new FPVector3(fighterData->Position.X, fighterData->Position.Y, 0));
-            
-            if (fighterData->IsFacingRight)
-                filter.Transform->Rotation.Y = 0;
-            else if (!fighterData->IsFacingRight)
-                filter.Transform->Rotation.Y = 180;
+            if (fd->CurrentState == StateID.FORWARD)
+                fd->Position.X += constants.ForwardWalkSpeed * deltaTime * sign;
+
+            CalculateVelocity(f, fd, constants);
+            CalculatePushback(f, fd);
+
+            if (fd->Velocity != FPVector2.Zero)
+            {
+                fd->Position.X += fd->Velocity.X * deltaTime * sign;
+                fd->Position.Y += fd->Velocity.Y * deltaTime;
+            }
+
+            if (fd->Pushback != FPVector2.Zero)
+            {
+                fd->Position.X += fd->Pushback.X * deltaTime * sign;
+                fd->Position.Y += fd->Pushback.Y * deltaTime;
+            }
+        }
+
+        private static void CalculateVelocity(Frame f, FighterData* fd, FighterConstants constants)
+        {
+            if (fd->Position.Y <= 0)
+            {
+                if (fd->Velocity.X != 0) fd->Velocity.X -= f.Global->FrictionCoefficient * fd->Velocity.X;
+                if (FPMath.Abs(fd->Velocity.X) < FP._0_01) fd->Velocity.X = 0;
+                if (fd->Velocity.Y < 0) fd->Velocity.Y = 0;
+            }
+
+            if (constants.States[fd->CurrentState].IsMovementState)
+            {
+                var movementData = constants.States[fd->CurrentState].GetMovementData(fd->StateFrame);
+                if (movementData != null)
+                {
+                    switch (constants.States[fd->CurrentState].MovementType)
+                    {
+                        case MovementType.Grounded:
+                            fd->Velocity.X = movementData.Velocity.X;
+                            fd->Velocity.Y = movementData.Velocity.Y;
+                            break;
+                        
+                        case MovementType.Aerial:
+                            fd->Velocity.X += movementData.Velocity.X;
+                            fd->Velocity.Y += movementData.Velocity.Y;
+                            break;
+                    }
+                }
+            }
+
+            if (fd->Position.Y > 0)
+                fd->Velocity.Y -= f.Global->DownwardForce * f.DeltaTime;
+        }
+
+        private static void CalculatePushback(Frame f, FighterData* fd)
+        {
+            if (fd->Pushback.X != 0) fd->Pushback.X -= f.Global->FrictionCoefficient * fd->Pushback.X;
+            if (FPMath.Abs(fd->Pushback.X) < FP._0_01) fd->Pushback.X = 0;
+            if (fd->Position.Y <= 0) fd->Pushback.Y = 0;
         }
     }
 }

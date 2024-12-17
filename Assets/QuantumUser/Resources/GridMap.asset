@@ -20,7 +20,7 @@ MonoBehaviour:
     Id:
       Value: 0
   Scene: Grid
-  ScenePath: Assets/QuantumUser/Scenes/Grid.unity
+  ScenePath: Assets/Scenes/Grid.unity
   SceneGuid: 7d83e04818765794c82843743fd3732a
   WorldSize: 256
   BucketsCount: 16

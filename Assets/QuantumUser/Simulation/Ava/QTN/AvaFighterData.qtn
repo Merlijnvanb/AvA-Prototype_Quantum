@@ -1,12 +1,12 @@
 component FighterData
 {
     asset_ref<FighterConstants> Constants;
+    int FighterID;
 
     FPVector2 Position;
     FPVector2 Velocity;
     FPVector2 Pushback;
     bool IsFacingRight;
-    bool IsGrounded;
     
     int requestedSideSwitch;
     

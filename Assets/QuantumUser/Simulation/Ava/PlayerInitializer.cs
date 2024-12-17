@@ -18,6 +18,9 @@ namespace Quantum.Ava
         
         public void OnPlayerAdded(Frame f, PlayerRef player, bool firstTime)
         {
+            if (player._index > 2) 
+                return;
+            
             var data = f.GetPlayerData(player);
             var fighterEntity = f.Create(f.FindAsset<EntityPrototype>(data.PlayerAvatar));
 
@@ -40,9 +43,9 @@ namespace Quantum.Ava
                 f.Global->Fighter2 = fighterEntity;
             }
             
+            fighterData->FighterID = player._index;
             fighterData->Velocity = new FPVector2(0, 0);
             fighterData->Pushback = new FPVector2(0, 0);
-            fighterData->IsGrounded = true;
             fighterData->requestedSideSwitch = 0;
             fighterData->Health = constants.MaxHealth;
             fighterData->HitStun = 0;

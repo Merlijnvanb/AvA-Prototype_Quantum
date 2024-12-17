@@ -98,6 +98,4 @@ namespace Quantum.Ava
             fd->StateFrame = frame;
         }
     }
-    
-    
 }

@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 5683906972766741464}
   - component: {fileID: 1376168716649802450}
   - component: {fileID: -8158807787500543471}
+  - component: {fileID: -3686479190148320425}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -134,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836dcb7e0f6259748b850a10912ce727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransformMode: 1
+  TransformMode: 2
   Transform2DVertical:
     IsEnabled: 0
     Height:
@@ -340,22 +341,25 @@ MonoBehaviour:
         RawValue: 0
     IsFacingRight:
       Value: 0
-    IsGrounded:
-      Value: 0
+    requestedSideSwitch: 0
     Health: 0
     HitStun: 0
     BlockStun: 0
-    CurrentState: 0
+    CurrentState:
+      Value: 0
     StateFrame: 0
     HitBoxList: []
     HurtBoxList: []
     PushBox:
-      Rect:
+      RectPos:
         X:
           RawValue: 0
         Y:
           RawValue: 0
-        Z:
+      RectWH:
+        X:
+          RawValue: 0
+        Y:
           RawValue: 0
       XMin:
         RawValue: 0
@@ -365,6 +369,19 @@ MonoBehaviour:
         RawValue: 0
       YMax:
         RawValue: 0
+--- !u!114 &-3686479190148320425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4819069888528744156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de903d8b4c042a04dbef4776bd987340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Body: {fileID: 8733408975425462385}
 --- !u!1 &6202979178235445195
 GameObject:
   m_ObjectHideFlags: 0

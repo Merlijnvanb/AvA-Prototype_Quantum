@@ -29,6 +29,7 @@ namespace Quantum.Ava
                 f.Global->ParseInputs = true;
             
             CheckSides(f);
+            f.Events.UpdateUI(f.Global->Fighter1, f.Global->Fighter2, f.Global->Fighter1Score, f.Global->Fighter2Score);
         }
 
         private void CheckSides(Frame f)

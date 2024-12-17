@@ -1082,27 +1082,27 @@ namespace Quantum {
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(40)]
     public AssetRef<FighterConstants> Constants;
+    [FieldOffset(4)]
+    public Int32 FighterID;
     [FieldOffset(48)]
     public FPVector2 Position;
     [FieldOffset(80)]
     public FPVector2 Velocity;
     [FieldOffset(64)]
     public FPVector2 Pushback;
-    [FieldOffset(20)]
-    public QBoolean IsFacingRight;
     [FieldOffset(24)]
-    public QBoolean IsGrounded;
-    [FieldOffset(16)]
+    public QBoolean IsFacingRight;
+    [FieldOffset(20)]
     public Int32 requestedSideSwitch;
-    [FieldOffset(4)]
-    public Int32 Health;
     [FieldOffset(8)]
+    public Int32 Health;
+    [FieldOffset(12)]
     public Int32 HitStun;
     [FieldOffset(0)]
     public Int32 BlockStun;
     [FieldOffset(36)]
     public StateID CurrentState;
-    [FieldOffset(12)]
+    [FieldOffset(16)]
     public Int32 StateFrame;
     [FieldOffset(28)]
     public QListPtr<HitBox> HitBoxList;
@@ -1114,11 +1114,11 @@ namespace Quantum {
       unchecked { 
         var hash = 19541;
         hash = hash * 31 + Constants.GetHashCode();
+        hash = hash * 31 + FighterID.GetHashCode();
         hash = hash * 31 + Position.GetHashCode();
         hash = hash * 31 + Velocity.GetHashCode();
         hash = hash * 31 + Pushback.GetHashCode();
         hash = hash * 31 + IsFacingRight.GetHashCode();
-        hash = hash * 31 + IsGrounded.GetHashCode();
         hash = hash * 31 + requestedSideSwitch.GetHashCode();
         hash = hash * 31 + Health.GetHashCode();
         hash = hash * 31 + HitStun.GetHashCode();
@@ -1142,12 +1142,12 @@ namespace Quantum {
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (FighterData*)ptr;
         serializer.Stream.Serialize(&p->BlockStun);
+        serializer.Stream.Serialize(&p->FighterID);
         serializer.Stream.Serialize(&p->Health);
         serializer.Stream.Serialize(&p->HitStun);
         serializer.Stream.Serialize(&p->StateFrame);
         serializer.Stream.Serialize(&p->requestedSideSwitch);
         QBoolean.Serialize(&p->IsFacingRight, serializer);
-        QBoolean.Serialize(&p->IsGrounded, serializer);
         QList.Serialize(&p->HitBoxList, serializer, Statics.SerializeHitBox);
         QList.Serialize(&p->HurtBoxList, serializer, Statics.SerializeHurtBox);
         serializer.Stream.Serialize((Int32*)&p->CurrentState);

@@ -3603,6 +3603,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1608324803}
+  - component: {fileID: 1608324804}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -3627,6 +3628,30 @@ Transform:
   - {fileID: 1034004397}
   m_Father: {fileID: 1284111460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1608324804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608324802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bfc706c7e349644ea7e94fb32cd851b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Updater: {fileID: 418183000}
+  UseFindUpdater: 0
+  P1CurrentState: {fileID: 735750117}
+  P1BlockstunText: {fileID: 1945660221}
+  P1HitstunText: {fileID: 1431841469}
+  P2CurrentState: {fileID: 54022201}
+  P2BlockstunText: {fileID: 1913191362}
+  P2HitstunText: {fileID: 2077145665}
+  P1HealthText: {fileID: 2133547638}
+  P2HealthText: {fileID: 603756184}
+  P1Score: {fileID: 2021813962}
+  P2Score: {fileID: 11662998}
 --- !u!1 &1622875435
 GameObject:
   m_ObjectHideFlags: 0

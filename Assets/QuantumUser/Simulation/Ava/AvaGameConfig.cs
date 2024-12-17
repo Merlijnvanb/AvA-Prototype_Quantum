@@ -17,7 +17,7 @@ namespace Quantum.Ava
         public int JumpAlterFrames = 4;
 
         public FP DownwardForce = 13;
-        public FP FrictionCoefficient = FP._0_75;
+        public FP FrictionCoefficient = FP._0_33;
 
         public FP SideSwitchThreshold = FP._0_10;
 
