@@ -52,9 +52,9 @@ namespace Quantum.Ava
             fighterData->BlockStun = 0;
             fighterData->CurrentState = StateID.STAND;
             fighterData->StateFrame = 0;
-            fighterData->HitBoxList = new QListPtr<HitBox>();
-            fighterData->HurtBoxList = new QListPtr<HurtBox>();
-            fighterData->PushBox = new PushBox();
+            fighterData->HitboxList = new QListPtr<Hitbox>();
+            fighterData->HurtboxList = new QListPtr<Hurtbox>();
+            fighterData->Pushbox = new Pushbox();
 
             f.Add(fighterEntity, new PlayerLink { PlayerRef = player });
         }

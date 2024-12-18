@@ -17,25 +17,27 @@ component FighterData
     StateID CurrentState;
     int StateFrame;
     
-    list<HitBox> HitBoxList;
-    list<HurtBox> HurtBoxList;
-    PushBox PushBox;
+    list<Hitbox> HitboxList;
+    list<Hurtbox> HurtboxList;
+    Pushbox Pushbox;
+    
+    array<Input>[180] InputHistory;
 }
 
-struct HitBox : BoxBase
+struct Hitbox : BoxBase
 {
     bool IsProximity;
     int HitNum;
     asset_ref<AttackProperties> AttackProperties;
 }
 
-struct HurtBox : BoxBase
+struct Hurtbox : BoxBase
 {
     bool IsAirborne;
     bool IsInvulnerable;
 }
 
-struct PushBox : BoxBase
+struct Pushbox : BoxBase
 {
 }
 

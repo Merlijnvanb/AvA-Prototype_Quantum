@@ -12,15 +12,16 @@ namespace Quantum.Ava
             var fd = filter.FighterData;
             var constants = f.FindAsset<FighterConstants>(fd->Constants);
 
-            var hitBoxes = f.ResolveList(fd->HitBoxList);
-            var hurtBoxes = f.ResolveList(fd->HurtBoxList);
+            var hitboxes = f.ResolveList(fd->HitboxList);
+            var hurtboxes = f.ResolveList(fd->HurtboxList);
             
-            hitBoxes.Clear();
-            hurtBoxes.Clear();
+            hitboxes.Clear();
+            hurtboxes.Clear();
+            
 
             foreach (var hitboxData in constants.States[fd->CurrentState].GetHitboxData(fd->StateFrame))
             {
-                var hitBox = new HitBox
+                var hitBox = new Hitbox
                 {
                     RectPos = ConvertRectPos(hitboxData.RectPos, fd),
                     RectWH = hitboxData.RectWH,
@@ -29,30 +30,39 @@ namespace Quantum.Ava
                         null : hitboxData.AttackProperties
                 };
                 
-                hitBoxes.Add(hitBox);
+                hitboxes.Add(hitBox);
             }
+            
 
-            foreach (var hurtBoxData in constants.States[fd->CurrentState].GetHurtboxData(fd->StateFrame))
+            foreach (var hurtboxData in constants.States[fd->CurrentState].GetHurtboxData(fd->StateFrame))
             {
-                var hurtBox = new HurtBox
+                var hurtPos = hurtboxData.UseBaseRect ? constants.BaseHurtBoxRectPos : hurtboxData.RectPos;
+                var hurtWH = hurtboxData.UseBaseRect ? constants.BaseHurtBoxRectWH : hurtboxData.RectWH;
+                
+                var hurtBox = new Hurtbox
                 {
-                    RectPos = ConvertRectPos(hurtBoxData.RectPos, fd),
-                    RectWH = hurtBoxData.RectWH,
-                    IsAirborne = hurtBoxData.IsAirborne,
-                    IsInvulnerable = hurtBoxData.IsInvulnerable,
+                    RectPos = ConvertRectPos(hurtPos, fd),
+                    RectWH = hurtWH,
+                    IsAirborne = hurtboxData.IsAirborne,
+                    IsInvulnerable = hurtboxData.IsInvulnerable,
                 };
                 
-                hurtBoxes.Add(hurtBox);
+                hurtboxes.Add(hurtBox);
             }
+            
 
-            var pushboxData = constants.States[fd->CurrentState].GetPushBoxData(fd->StateFrame);
-            var pushbox = new PushBox
+            var pushboxData = constants.States[fd->CurrentState].GetPushboxData(fd->StateFrame);
+            
+            var pushPos = pushboxData.UseBaseRect ? constants.BasePushBoxRectPos : pushboxData.RectPos;
+            var pushWH = pushboxData.UseBaseRect ? constants.BasePushBoxRectWH : pushboxData.RectWH;
+            
+            var pushbox = new Pushbox
             {
-                RectPos = ConvertRectPos(pushboxData.RectPos, fd),
-                RectWH = pushboxData.RectWH,
+                RectPos = ConvertRectPos(pushPos, fd),
+                RectWH = pushWH,
             };
             
-            fd->PushBox = pushbox;
+            fd->Pushbox = pushbox;
         }
 
         private static FPVector2 ConvertRectPos(FPVector2 rectPos, FighterData* fd)

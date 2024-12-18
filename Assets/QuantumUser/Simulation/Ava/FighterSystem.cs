@@ -19,7 +19,7 @@ namespace Quantum.Ava
             // UpdateView(f, ref filter);
             
             Log.LogLevel = LogType.Debug;
-            Log.Debug(f.ResolveList(filter.FighterData->HurtBoxList).Count);
+            //Log.Debug(f.ResolveList(filter.FighterData->HurtboxList).Count);
         }
 
         private void UpdateFighters(Frame f, ref Filter filter)

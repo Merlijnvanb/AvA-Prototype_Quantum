@@ -239,10 +239,12 @@ namespace Quantum.Prototypes {
     public Quantum.QEnum32<StateID> CurrentState;
     public Int32 StateFrame;
     [DynamicCollectionAttribute()]
-    public Quantum.Prototypes.HitBoxPrototype[] HitBoxList = {};
+    public Quantum.Prototypes.HitboxPrototype[] HitboxList = {};
     [DynamicCollectionAttribute()]
-    public Quantum.Prototypes.HurtBoxPrototype[] HurtBoxList = {};
-    public Quantum.Prototypes.PushBoxPrototype PushBox;
+    public Quantum.Prototypes.HurtboxPrototype[] HurtboxList = {};
+    public Quantum.Prototypes.PushboxPrototype Pushbox;
+    [ArrayLengthAttribute(180)]
+    public Quantum.Prototypes.InputPrototype[] InputHistory = new Quantum.Prototypes.InputPrototype[180];
     partial void MaterializeUser(Frame frame, ref Quantum.FighterData result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.FighterData component = default;
@@ -262,33 +264,36 @@ namespace Quantum.Prototypes {
         result.BlockStun = this.BlockStun;
         result.CurrentState = this.CurrentState;
         result.StateFrame = this.StateFrame;
-        if (this.HitBoxList.Length == 0) {
-          result.HitBoxList = default;
+        if (this.HitboxList.Length == 0) {
+          result.HitboxList = default;
         } else {
-          var list = frame.AllocateList(out result.HitBoxList, this.HitBoxList.Length);
-          for (int i = 0; i < this.HitBoxList.Length; ++i) {
-            Quantum.HitBox tmp = default;
-            this.HitBoxList[i].Materialize(frame, ref tmp, in context);
+          var list = frame.AllocateList(out result.HitboxList, this.HitboxList.Length);
+          for (int i = 0; i < this.HitboxList.Length; ++i) {
+            Quantum.Hitbox tmp = default;
+            this.HitboxList[i].Materialize(frame, ref tmp, in context);
             list.Add(tmp);
           }
         }
-        if (this.HurtBoxList.Length == 0) {
-          result.HurtBoxList = default;
+        if (this.HurtboxList.Length == 0) {
+          result.HurtboxList = default;
         } else {
-          var list = frame.AllocateList(out result.HurtBoxList, this.HurtBoxList.Length);
-          for (int i = 0; i < this.HurtBoxList.Length; ++i) {
-            Quantum.HurtBox tmp = default;
-            this.HurtBoxList[i].Materialize(frame, ref tmp, in context);
+          var list = frame.AllocateList(out result.HurtboxList, this.HurtboxList.Length);
+          for (int i = 0; i < this.HurtboxList.Length; ++i) {
+            Quantum.Hurtbox tmp = default;
+            this.HurtboxList[i].Materialize(frame, ref tmp, in context);
             list.Add(tmp);
           }
         }
-        this.PushBox.Materialize(frame, ref result.PushBox, in context);
+        this.Pushbox.Materialize(frame, ref result.Pushbox, in context);
+        for (int i = 0, count = PrototypeValidator.CheckLength(InputHistory, 180, in context); i < count; ++i) {
+          this.InputHistory[i].Materialize(frame, ref *result.InputHistory.GetPointer(i), in context);
+        }
         MaterializeUser(frame, ref result, in context);
     }
   }
   [System.SerializableAttribute()]
-  [Quantum.Prototypes.Prototype(typeof(Quantum.HitBox))]
-  public unsafe partial class HitBoxPrototype : StructPrototype {
+  [Quantum.Prototypes.Prototype(typeof(Quantum.Hitbox))]
+  public unsafe partial class HitboxPrototype : StructPrototype {
     public QBoolean IsProximity;
     public FPVector2 RectPos;
     public Int32 HitNum;
@@ -298,8 +303,8 @@ namespace Quantum.Prototypes {
     public FP XMax;
     public FP YMin;
     public FP YMax;
-    partial void MaterializeUser(Frame frame, ref Quantum.HitBox result, in PrototypeMaterializationContext context);
-    public void Materialize(Frame frame, ref Quantum.HitBox result, in PrototypeMaterializationContext context = default) {
+    partial void MaterializeUser(Frame frame, ref Quantum.Hitbox result, in PrototypeMaterializationContext context);
+    public void Materialize(Frame frame, ref Quantum.Hitbox result, in PrototypeMaterializationContext context = default) {
         result.IsProximity = this.IsProximity;
         result.RectPos = this.RectPos;
         result.HitNum = this.HitNum;
@@ -313,8 +318,8 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
-  [Quantum.Prototypes.Prototype(typeof(Quantum.HurtBox))]
-  public unsafe partial class HurtBoxPrototype : StructPrototype {
+  [Quantum.Prototypes.Prototype(typeof(Quantum.Hurtbox))]
+  public unsafe partial class HurtboxPrototype : StructPrototype {
     public QBoolean IsAirborne;
     public FPVector2 RectPos;
     public QBoolean IsInvulnerable;
@@ -323,8 +328,8 @@ namespace Quantum.Prototypes {
     public FP XMax;
     public FP YMin;
     public FP YMax;
-    partial void MaterializeUser(Frame frame, ref Quantum.HurtBox result, in PrototypeMaterializationContext context);
-    public void Materialize(Frame frame, ref Quantum.HurtBox result, in PrototypeMaterializationContext context = default) {
+    partial void MaterializeUser(Frame frame, ref Quantum.Hurtbox result, in PrototypeMaterializationContext context);
+    public void Materialize(Frame frame, ref Quantum.Hurtbox result, in PrototypeMaterializationContext context = default) {
         result.IsAirborne = this.IsAirborne;
         result.RectPos = this.RectPos;
         result.IsInvulnerable = this.IsInvulnerable;
@@ -376,16 +381,16 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
-  [Quantum.Prototypes.Prototype(typeof(Quantum.PushBox))]
-  public unsafe partial class PushBoxPrototype : StructPrototype {
+  [Quantum.Prototypes.Prototype(typeof(Quantum.Pushbox))]
+  public unsafe partial class PushboxPrototype : StructPrototype {
     public FPVector2 RectPos;
     public FPVector2 RectWH;
     public FP XMin;
     public FP XMax;
     public FP YMin;
     public FP YMax;
-    partial void MaterializeUser(Frame frame, ref Quantum.PushBox result, in PrototypeMaterializationContext context);
-    public void Materialize(Frame frame, ref Quantum.PushBox result, in PrototypeMaterializationContext context = default) {
+    partial void MaterializeUser(Frame frame, ref Quantum.Pushbox result, in PrototypeMaterializationContext context);
+    public void Materialize(Frame frame, ref Quantum.Pushbox result, in PrototypeMaterializationContext context = default) {
         result.RectPos = this.RectPos;
         result.RectWH = this.RectWH;
         result.XMin = this.XMin;

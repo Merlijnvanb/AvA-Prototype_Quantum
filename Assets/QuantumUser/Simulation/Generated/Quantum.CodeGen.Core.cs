@@ -505,7 +505,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   [Quantum.Core.DerivedStructAttribute(typeof(BoxBase))]
-  public unsafe partial struct HitBox : IDerivedStruct<BoxBase> {
+  public unsafe partial struct Hitbox : IDerivedStruct<BoxBase> {
     public const Int32 SIZE = 80;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(68)]
@@ -528,7 +528,7 @@ namespace Quantum {
     public FP YMax;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 461;
+        var hash = 17903;
         hash = hash * 31 + IsProximity.GetHashCode();
         hash = hash * 31 + RectPos.GetHashCode();
         hash = hash * 31 + HitNum.GetHashCode();
@@ -542,7 +542,7 @@ namespace Quantum {
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
-        var p = (HitBox*)ptr;
+        var p = (Hitbox*)ptr;
         FP.Serialize(&p->XMax, serializer);
         FP.Serialize(&p->XMin, serializer);
         FP.Serialize(&p->YMax, serializer);
@@ -556,7 +556,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   [Quantum.Core.DerivedStructAttribute(typeof(BoxBase))]
-  public unsafe partial struct HurtBox : IDerivedStruct<BoxBase> {
+  public unsafe partial struct Hurtbox : IDerivedStruct<BoxBase> {
     public const Int32 SIZE = 72;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(64)]
@@ -577,7 +577,7 @@ namespace Quantum {
     public FP YMax;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 5737;
+        var hash = 2113;
         hash = hash * 31 + IsAirborne.GetHashCode();
         hash = hash * 31 + RectPos.GetHashCode();
         hash = hash * 31 + IsInvulnerable.GetHashCode();
@@ -590,7 +590,7 @@ namespace Quantum {
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
-        var p = (HurtBox*)ptr;
+        var p = (Hurtbox*)ptr;
         FP.Serialize(&p->XMax, serializer);
         FP.Serialize(&p->XMin, serializer);
         FP.Serialize(&p->YMax, serializer);
@@ -678,7 +678,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   [Quantum.Core.DerivedStructAttribute(typeof(BoxBase))]
-  public unsafe partial struct PushBox : IDerivedStruct<BoxBase> {
+  public unsafe partial struct Pushbox : IDerivedStruct<BoxBase> {
     public const Int32 SIZE = 64;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(32)]
@@ -695,7 +695,7 @@ namespace Quantum {
     public FP YMax;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 13709;
+        var hash = 9619;
         hash = hash * 31 + RectPos.GetHashCode();
         hash = hash * 31 + RectWH.GetHashCode();
         hash = hash * 31 + XMin.GetHashCode();
@@ -706,7 +706,7 @@ namespace Quantum {
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
-        var p = (PushBox*)ptr;
+        var p = (Pushbox*)ptr;
         FP.Serialize(&p->XMax, serializer);
         FP.Serialize(&p->XMin, serializer);
         FP.Serialize(&p->YMax, serializer);
@@ -1078,7 +1078,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct FighterData : Quantum.IComponent {
-    public const Int32 SIZE = 160;
+    public const Int32 SIZE = 17440;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(40)]
     public AssetRef<FighterConstants> Constants;
@@ -1105,11 +1105,19 @@ namespace Quantum {
     [FieldOffset(16)]
     public Int32 StateFrame;
     [FieldOffset(28)]
-    public QListPtr<HitBox> HitBoxList;
+    public QListPtr<Hitbox> HitboxList;
     [FieldOffset(32)]
-    public QListPtr<HurtBox> HurtBoxList;
+    public QListPtr<Hurtbox> HurtboxList;
     [FieldOffset(96)]
-    public PushBox PushBox;
+    public Pushbox Pushbox;
+    [FieldOffset(160)]
+    [FramePrinter.FixedArrayAttribute(typeof(Input), 180)]
+    private fixed Byte _InputHistory_[17280];
+    public FixedArray<Input> InputHistory {
+      get {
+        fixed (byte* p = _InputHistory_) { return new FixedArray<Input>(p, 96, 180); }
+      }
+    }
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 19541;
@@ -1125,15 +1133,16 @@ namespace Quantum {
         hash = hash * 31 + BlockStun.GetHashCode();
         hash = hash * 31 + (Int32)CurrentState;
         hash = hash * 31 + StateFrame.GetHashCode();
-        hash = hash * 31 + HitBoxList.GetHashCode();
-        hash = hash * 31 + HurtBoxList.GetHashCode();
-        hash = hash * 31 + PushBox.GetHashCode();
+        hash = hash * 31 + HitboxList.GetHashCode();
+        hash = hash * 31 + HurtboxList.GetHashCode();
+        hash = hash * 31 + Pushbox.GetHashCode();
+        hash = hash * 31 + HashCodeUtils.GetArrayHashCode(InputHistory);
         return hash;
       }
     }
     public void ClearPointers(FrameBase f, EntityRef entity) {
-      HitBoxList = default;
-      HurtBoxList = default;
+      HitboxList = default;
+      HurtboxList = default;
     }
     public static void OnRemoved(FrameBase frame, EntityRef entity, void* ptr) {
       var p = (Quantum.FighterData*)ptr;
@@ -1148,14 +1157,15 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->StateFrame);
         serializer.Stream.Serialize(&p->requestedSideSwitch);
         QBoolean.Serialize(&p->IsFacingRight, serializer);
-        QList.Serialize(&p->HitBoxList, serializer, Statics.SerializeHitBox);
-        QList.Serialize(&p->HurtBoxList, serializer, Statics.SerializeHurtBox);
+        QList.Serialize(&p->HitboxList, serializer, Statics.SerializeHitbox);
+        QList.Serialize(&p->HurtboxList, serializer, Statics.SerializeHurtbox);
         serializer.Stream.Serialize((Int32*)&p->CurrentState);
         AssetRef.Serialize(&p->Constants, serializer);
         FPVector2.Serialize(&p->Position, serializer);
         FPVector2.Serialize(&p->Pushback, serializer);
         FPVector2.Serialize(&p->Velocity, serializer);
-        Quantum.PushBox.Serialize(&p->PushBox, serializer);
+        Quantum.Pushbox.Serialize(&p->Pushbox, serializer);
+        FixedArray.Serialize(p->InputHistory, serializer, Statics.SerializeInput);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -1270,16 +1280,16 @@ namespace Quantum {
     public static FrameSerializer.Delegate SerializeInt32;
     public static FrameSerializer.Delegate SerializeBlendTreeWeights;
     public static FrameSerializer.Delegate SerializeFP;
-    public static FrameSerializer.Delegate SerializeHitBox;
-    public static FrameSerializer.Delegate SerializeHurtBox;
+    public static FrameSerializer.Delegate SerializeHitbox;
+    public static FrameSerializer.Delegate SerializeHurtbox;
     public static FrameSerializer.Delegate SerializeInput;
     static partial void InitStaticDelegatesGen() {
       SerializeAnimatorRuntimeVariable = Quantum.AnimatorRuntimeVariable.Serialize;
       SerializeInt32 = (v, s) => {{ s.Stream.Serialize((Int32*)v); }};
       SerializeBlendTreeWeights = Quantum.BlendTreeWeights.Serialize;
       SerializeFP = FP.Serialize;
-      SerializeHitBox = Quantum.HitBox.Serialize;
-      SerializeHurtBox = Quantum.HurtBox.Serialize;
+      SerializeHitbox = Quantum.Hitbox.Serialize;
+      SerializeHurtbox = Quantum.Hurtbox.Serialize;
       SerializeInput = Quantum.Input.Serialize;
     }
     static partial void RegisterSimulationTypesGen(TypeRegistry typeRegistry) {
@@ -1324,8 +1334,8 @@ namespace Quantum {
       typeRegistry.Register(typeof(HingeJoint3D), HingeJoint3D.SIZE);
       typeRegistry.Register(typeof(Hit), Hit.SIZE);
       typeRegistry.Register(typeof(Hit3D), Hit3D.SIZE);
-      typeRegistry.Register(typeof(Quantum.HitBox), Quantum.HitBox.SIZE);
-      typeRegistry.Register(typeof(Quantum.HurtBox), Quantum.HurtBox.SIZE);
+      typeRegistry.Register(typeof(Quantum.Hitbox), Quantum.Hitbox.SIZE);
+      typeRegistry.Register(typeof(Quantum.Hurtbox), Quantum.Hurtbox.SIZE);
       typeRegistry.Register(typeof(Quantum.Input), Quantum.Input.SIZE);
       typeRegistry.Register(typeof(Quantum.InputButtons), 4);
       typeRegistry.Register(typeof(Joint), Joint.SIZE);
@@ -1356,7 +1366,7 @@ namespace Quantum {
       typeRegistry.Register(typeof(Quantum.PlayerLink), Quantum.PlayerLink.SIZE);
       typeRegistry.Register(typeof(PlayerRef), PlayerRef.SIZE);
       typeRegistry.Register(typeof(Ptr), Ptr.SIZE);
-      typeRegistry.Register(typeof(Quantum.PushBox), Quantum.PushBox.SIZE);
+      typeRegistry.Register(typeof(Quantum.Pushbox), Quantum.Pushbox.SIZE);
       typeRegistry.Register(typeof(QBoolean), QBoolean.SIZE);
       typeRegistry.Register(typeof(Quantum.Ptr), Quantum.Ptr.SIZE);
       typeRegistry.Register(typeof(QueryOptions), 2);

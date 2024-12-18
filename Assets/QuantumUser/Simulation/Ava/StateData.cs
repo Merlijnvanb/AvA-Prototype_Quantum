@@ -45,7 +45,7 @@ namespace Quantum
             return hb;
         }
 
-        public PushboxData GetPushBoxData(int frame)
+        public PushboxData GetPushboxData(int frame)
         {
             foreach (var data in Pushboxes)
             {
@@ -87,6 +87,7 @@ namespace Quantum
     [System.Serializable]
     public class HurtboxData : FrameDataBase
     {
+        public bool UseBaseRect;
         public FPVector2 RectPos;
         public FPVector2 RectWH;
 
@@ -111,12 +112,12 @@ namespace Quantum
     public enum GuardType
     {
         Standing,
-        Crouching,
+        Crouching
     }
 
     public enum MovementType
     {
         Grounded,
-        Aerial,
+        Aerial
     }
 }

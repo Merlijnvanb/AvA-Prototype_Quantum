@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f5bbd7015499e43ab6264ee125a7c1, type: 3}
+  m_Name: DASH_FORWARD
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/FighterData/States/DASH_FORWARD
+    Guid:
+      Value: 435940959278253506
+  StateID: 4
+  IsGuardState: 0
+  IsMovementState: 1
+  GuardType: 0
+  MovementType: 0
+  FrameCount: 18
+  IsLoop: 0
+  LoopFromFrame: 0
+  IsAlwaysCancelable: 0
+  Hitboxes: []
+  Hurtboxes:
+  - StartEndFrame:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 1179648
+    UseBaseRect: 1
+    RectPos:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+    RectWH:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+    IsAirborne: 0
+    IsInvulnerable: 0
+  Pushboxes:
+  - StartEndFrame:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 1179648
+    UseBaseRect: 1
+    RectPos:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+    RectWH:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+  Movements: []
