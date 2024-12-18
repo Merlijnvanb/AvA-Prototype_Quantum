@@ -16,7 +16,6 @@ namespace Quantum.Ava
         public override void Update(Frame f, ref Filter filter)
         {
             UpdateFighters(f, ref filter);
-            // UpdateView(f, ref filter);
             
             Log.LogLevel = LogType.Debug;
             //Log.Debug(f.ResolveList(filter.FighterData->HurtboxList).Count);
@@ -26,6 +25,7 @@ namespace Quantum.Ava
         {
             UpdateFacing(f, ref filter);
             
+            InputManager.UpdateInputs(f, ref filter);
             StateManager.UpdateState(f, ref filter);
             MovementHandler.UpdateMovement(f, ref filter);
             BoxManager.UpdateBoxes(f, ref filter);
@@ -43,19 +43,6 @@ namespace Quantum.Ava
                 fd->requestedSideSwitch = 0;
             }
         }
-
-        // private void UpdateView(Frame f, ref Filter filter)
-        // {
-        //     var fighterData = filter.FighterData;
-        //     
-        //     
-        //     filter.Transform->Teleport(f, new FPVector3(fighterData->Position.X, fighterData->Position.Y, 0));
-        //     
-        //     if (fighterData->IsFacingRight)
-        //         filter.Transform->Rotation.Y = 0;
-        //     else if (!fighterData->IsFacingRight)
-        //         filter.Transform->Rotation.Y = 180;
-        // }
     }
 }
 

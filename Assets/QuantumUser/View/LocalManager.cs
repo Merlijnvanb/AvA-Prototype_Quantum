@@ -4,6 +4,8 @@ public class LocalManager : MonoBehaviour
 {
     public static LocalManager Instance { get; private set; }
 
+    [SerializeField] private bool unlockFPS = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -14,7 +16,7 @@ public class LocalManager : MonoBehaviour
         {
             Instance = this;
         }
-        
-        Application.targetFrameRate = 60;
+
+        Application.targetFrameRate = unlockFPS ? 0 : 60;
     }
 }

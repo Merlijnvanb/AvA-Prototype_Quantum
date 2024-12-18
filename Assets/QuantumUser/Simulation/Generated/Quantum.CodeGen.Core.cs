@@ -1078,21 +1078,21 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct FighterData : Quantum.IComponent {
-    public const Int32 SIZE = 17440;
+    public const Int32 SIZE = 8808;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(40)]
+    [FieldOffset(48)]
     public AssetRef<FighterConstants> Constants;
     [FieldOffset(4)]
     public Int32 FighterID;
-    [FieldOffset(48)]
+    [FieldOffset(56)]
     public FPVector2 Position;
-    [FieldOffset(80)]
+    [FieldOffset(88)]
     public FPVector2 Velocity;
-    [FieldOffset(64)]
+    [FieldOffset(72)]
     public FPVector2 Pushback;
-    [FieldOffset(24)]
+    [FieldOffset(28)]
     public QBoolean IsFacingRight;
-    [FieldOffset(20)]
+    [FieldOffset(24)]
     public Int32 requestedSideSwitch;
     [FieldOffset(8)]
     public Int32 Health;
@@ -1100,22 +1100,24 @@ namespace Quantum {
     public Int32 HitStun;
     [FieldOffset(0)]
     public Int32 BlockStun;
-    [FieldOffset(36)]
+    [FieldOffset(40)]
     public StateID CurrentState;
-    [FieldOffset(16)]
+    [FieldOffset(20)]
     public Int32 StateFrame;
-    [FieldOffset(28)]
-    public QListPtr<Hitbox> HitboxList;
     [FieldOffset(32)]
+    public QListPtr<Hitbox> HitboxList;
+    [FieldOffset(36)]
     public QListPtr<Hurtbox> HurtboxList;
-    [FieldOffset(96)]
+    [FieldOffset(104)]
     public Pushbox Pushbox;
-    [FieldOffset(160)]
-    [FramePrinter.FixedArrayAttribute(typeof(Input), 180)]
-    private fixed Byte _InputHistory_[17280];
+    [FieldOffset(168)]
+    [FramePrinter.FixedArrayAttribute(typeof(Input), 90)]
+    private fixed Byte _InputHistory_[8640];
+    [FieldOffset(16)]
+    public Int32 InputHeadIndex;
     public FixedArray<Input> InputHistory {
       get {
-        fixed (byte* p = _InputHistory_) { return new FixedArray<Input>(p, 96, 180); }
+        fixed (byte* p = _InputHistory_) { return new FixedArray<Input>(p, 96, 90); }
       }
     }
     public override Int32 GetHashCode() {
@@ -1137,6 +1139,7 @@ namespace Quantum {
         hash = hash * 31 + HurtboxList.GetHashCode();
         hash = hash * 31 + Pushbox.GetHashCode();
         hash = hash * 31 + HashCodeUtils.GetArrayHashCode(InputHistory);
+        hash = hash * 31 + InputHeadIndex.GetHashCode();
         return hash;
       }
     }
@@ -1154,6 +1157,7 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->FighterID);
         serializer.Stream.Serialize(&p->Health);
         serializer.Stream.Serialize(&p->HitStun);
+        serializer.Stream.Serialize(&p->InputHeadIndex);
         serializer.Stream.Serialize(&p->StateFrame);
         serializer.Stream.Serialize(&p->requestedSideSwitch);
         QBoolean.Serialize(&p->IsFacingRight, serializer);

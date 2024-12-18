@@ -21,7 +21,8 @@ component FighterData
     list<Hurtbox> HurtboxList;
     Pushbox Pushbox;
     
-    array<Input>[180] InputHistory;
+    array<Input>[90] InputHistory;
+    int InputHeadIndex;
 }
 
 struct Hitbox : BoxBase

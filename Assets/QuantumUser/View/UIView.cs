@@ -30,8 +30,12 @@ namespace Quantum.Ava
 
         private void UpdateUI(EventUpdateUI data)
         {
-            var fd1 = PredictedFrame.Get<FighterData>(data.Fighter1);
-            var fd2 = PredictedFrame.Get<FighterData>(data.Fighter2);
+            P1Score.SetText("" + data.F1Score);
+            P2Score.SetText("" + data.F2Score);
+
+            if (!PredictedFrame.TryGet<FighterData>(data.Fighter1, out var fd1) ||
+                !PredictedFrame.TryGet<FighterData>(data.Fighter2, out var fd2))
+                return;
             
             P1CurrentState.SetText("P1 Current State: " + fd1.CurrentState);
             P1BlockstunText.SetText("P1 Blockstun: " + fd1.BlockStun);
@@ -43,9 +47,6 @@ namespace Quantum.Ava
 
             P1HealthText.SetText("P1 Health: " + fd1.Health);
             P2HealthText.SetText("P2 Health: " + fd2.Health);
-
-            P1Score.SetText("" + data.F1Score);
-            P2Score.SetText("" + data.F2Score);
         }
     }
 }

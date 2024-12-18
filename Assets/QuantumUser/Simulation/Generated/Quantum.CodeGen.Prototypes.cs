@@ -243,8 +243,9 @@ namespace Quantum.Prototypes {
     [DynamicCollectionAttribute()]
     public Quantum.Prototypes.HurtboxPrototype[] HurtboxList = {};
     public Quantum.Prototypes.PushboxPrototype Pushbox;
-    [ArrayLengthAttribute(180)]
-    public Quantum.Prototypes.InputPrototype[] InputHistory = new Quantum.Prototypes.InputPrototype[180];
+    [ArrayLengthAttribute(90)]
+    public Quantum.Prototypes.InputPrototype[] InputHistory = new Quantum.Prototypes.InputPrototype[90];
+    public Int32 InputHeadIndex;
     partial void MaterializeUser(Frame frame, ref Quantum.FighterData result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.FighterData component = default;
@@ -285,9 +286,10 @@ namespace Quantum.Prototypes {
           }
         }
         this.Pushbox.Materialize(frame, ref result.Pushbox, in context);
-        for (int i = 0, count = PrototypeValidator.CheckLength(InputHistory, 180, in context); i < count; ++i) {
+        for (int i = 0, count = PrototypeValidator.CheckLength(InputHistory, 90, in context); i < count; ++i) {
           this.InputHistory[i].Materialize(frame, ref *result.InputHistory.GetPointer(i), in context);
         }
+        result.InputHeadIndex = this.InputHeadIndex;
         MaterializeUser(frame, ref result, in context);
     }
   }

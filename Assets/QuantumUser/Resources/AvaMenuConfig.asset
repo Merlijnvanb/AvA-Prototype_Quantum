@@ -23,7 +23,7 @@ MonoBehaviour:
   - us
   _availableScenes:
   - Name: Grid
-    ScenePath: Assets/QuantumUser/Scenes/Grid.unity
+    ScenePath: Assets/Scenes/Grid.unity
     Preview: {fileID: 0}
     RuntimeConfig:
       Seed: 0
