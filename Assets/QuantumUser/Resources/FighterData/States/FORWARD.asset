@@ -32,6 +32,7 @@ MonoBehaviour:
         RawValue: 0
       Y:
         RawValue: 0
+    UseBaseRect: 1
     RectPos:
       X:
         RawValue: 0

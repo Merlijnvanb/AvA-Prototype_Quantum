@@ -22,3 +22,11 @@ MonoBehaviour:
     RawValue: 327680
   PreRoundTimer: 180
   RoundTimer: 3000
+  DashAllowFrames: 10
+  JumpAlterFrames: 4
+  DownwardForce:
+    RawValue: 851968
+  FrictionCoefficient:
+    RawValue: 21845
+  SideSwitchThreshold:
+    RawValue: 6554

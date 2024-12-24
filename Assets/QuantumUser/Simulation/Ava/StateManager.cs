@@ -12,8 +12,8 @@ namespace Quantum.Ava
             var fConstants = f.FindAsset(fData->Constants);
             
             if (CheckAttackState(fData, fConstants)) return;
-            if (CheckJumpState(fData, fConstants)) return;
-            if (CheckDashState(fData, fConstants)) return;
+            if (CheckJumpState(fData, fConstants, f.Global->JumpAlterFrames)) return;
+            if (CheckDashState(fData, fConstants, f.Global->DashAllowFrames)) return;
             if (CheckMovementState(fData, fConstants)) return;
 
             RequestState(fData, fConstants, StateID.STAND);
@@ -24,13 +24,37 @@ namespace Quantum.Ava
             return false;
         }
 
-        private static bool CheckJumpState(FighterData* fd, FighterConstants fc)
+        private static bool CheckJumpState(FighterData* fd, FighterConstants fc, int jumpAlterFrames)
         {
+            var currentInput = fd->InputHistory[fd->InputHeadIndex];
+            
+            if (currentInput.Up)
+            {
+                RequestState(fd, fc, StateID.JUMP_NEUTRAL);
+                if (fd->CurrentState == StateID.JUMP_NEUTRAL && fd->StateFrame < jumpAlterFrames)
+                {
+                    SetCurrentState(fd, InputUtils.CheckJumpType(fd, currentInput), fd->StateFrame);
+                }
+            }
+            
             return false;
         }
 
-        private static bool CheckDashState(FighterData* fd, FighterConstants fc)
+        private static bool CheckDashState(FighterData* fd, FighterConstants fc, int dashAllowFrames)
         {
+            if (InputUtils.CheckDash(fd, dashAllowFrames, Direction.Forward))
+            {
+                Log.Debug("Forward Dash Requested");
+                RequestState(fd, fc, StateID.DASH_FORWARD);
+                return true;
+            }
+            if (InputUtils.CheckDash(fd, dashAllowFrames, Direction.Backward))
+            {
+                Log.Debug("Backward Dash Requested");
+                RequestState(fd, fc, StateID.DASH_BACKWARD);
+                return true;
+            }
+            
             return false;
         }
 
@@ -43,12 +67,12 @@ namespace Quantum.Ava
                 RequestState(fd, fc, StateID.CROUCH);
                 return true;
             }
-            if (InputUtils.IsForward(currentInput, fd))
+            if (InputUtils.IsDirection(fd, currentInput, Direction.Forward))
             {
                 RequestState(fd, fc, StateID.FORWARD);
                 return true;
             }
-            if (InputUtils.IsBackward(currentInput, fd))
+            if (InputUtils.IsDirection(fd, currentInput, Direction.Backward))
             {
                 RequestState(fd, fc, StateID.BACKWARD);
                 return true;

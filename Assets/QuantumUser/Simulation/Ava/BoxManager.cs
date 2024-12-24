@@ -1,7 +1,6 @@
 namespace Quantum.Ava
 {
     using Photon.Deterministic;
-    using Collections;
     using UnityEngine.Scripting;
 
     [Preserve]

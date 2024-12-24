@@ -46,9 +46,4 @@ struct BoxBase
 {
     FPVector2 RectPos;
     FPVector2 RectWH;
-    
-    FP XMin;
-    FP XMax;
-    FP YMin;
-    FP YMax;
 }

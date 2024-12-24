@@ -12,6 +12,8 @@ namespace Quantum.Ava
             f.Global->ParseInputs = false;
             f.Global->StageWidth = gameConfig.StageWidth;
             f.Global->MaxFighterDistance = gameConfig.MaxPlayerDistance;
+            f.Global->DashAllowFrames = gameConfig.DashAllowFrames;
+            f.Global->JumpAlterFrames = gameConfig.JumpAlterFrames;
             f.Global->DownwardForce = gameConfig.DownwardForce;
             f.Global->FrictionCoefficient = gameConfig.FrictionCoefficient;
             f.Global->SideSwitchThreshold = gameConfig.SideSwitchThreshold;
@@ -39,17 +41,11 @@ namespace Quantum.Ava
             {
                 if (fighter1->Position.X > fighter2->Position.X + f.Global->SideSwitchThreshold)
                 {
-                    // f.Signals.RequestSideSwitch(false, f.Global->Fighter1);
-                    // f.Signals.RequestSideSwitch(true, f.Global->Fighter2);
-
                     if (fighter1->IsFacingRight) fighter1->requestedSideSwitch = 2;
                     if (!fighter2->IsFacingRight) fighter2->requestedSideSwitch = 1;
                 }
                 else if (fighter1->Position.X < fighter2->Position.X - f.Global->SideSwitchThreshold)
                 {
-                    // f.Signals.RequestSideSwitch(true, f.Global->Fighter1);
-                    // f.Signals.RequestSideSwitch(false, f.Global->Fighter2);
-                    
                     if (!fighter1->IsFacingRight) fighter1->requestedSideSwitch = 1;
                     if (fighter2->IsFacingRight) fighter2->requestedSideSwitch = 2;
                 }

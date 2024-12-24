@@ -24,6 +24,7 @@ namespace Quantum.Ava
         private void UpdateFighters(Frame f, ref Filter filter)
         {
             UpdateFacing(f, ref filter);
+            IncrementState(f, ref filter);
             
             InputManager.UpdateInputs(f, ref filter);
             StateManager.UpdateState(f, ref filter);
@@ -42,6 +43,13 @@ namespace Quantum.Ava
                 fd->IsFacingRight = fd->requestedSideSwitch == 1;
                 fd->requestedSideSwitch = 0;
             }
+        }
+
+        private void IncrementState(Frame f, ref Filter filter)
+        {
+            var fd = filter.FighterData;
+            
+            fd->StateFrame++;
         }
     }
 }

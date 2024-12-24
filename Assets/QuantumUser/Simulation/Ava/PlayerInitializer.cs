@@ -52,8 +52,8 @@ namespace Quantum.Ava
             fighterData->BlockStun = 0;
             fighterData->CurrentState = StateID.STAND;
             fighterData->StateFrame = 0;
-            fighterData->HitboxList = new QListPtr<Hitbox>();
-            fighterData->HurtboxList = new QListPtr<Hurtbox>();
+            fighterData->HitboxList = f.AllocateList<Hitbox>();
+            fighterData->HurtboxList = f.AllocateList<Hurtbox>();
             fighterData->Pushbox = new Pushbox();
             fighterData->InputHeadIndex = -1;
 

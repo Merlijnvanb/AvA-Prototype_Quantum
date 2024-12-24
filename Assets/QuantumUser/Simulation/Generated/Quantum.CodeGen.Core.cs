@@ -467,38 +467,22 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct BoxBase {
-    public const Int32 SIZE = 64;
+    public const Int32 SIZE = 32;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(32)]
-    public FPVector2 RectPos;
-    [FieldOffset(48)]
-    public FPVector2 RectWH;
-    [FieldOffset(8)]
-    public FP XMin;
     [FieldOffset(0)]
-    public FP XMax;
-    [FieldOffset(24)]
-    public FP YMin;
+    public FPVector2 RectPos;
     [FieldOffset(16)]
-    public FP YMax;
+    public FPVector2 RectWH;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 10267;
         hash = hash * 31 + RectPos.GetHashCode();
         hash = hash * 31 + RectWH.GetHashCode();
-        hash = hash * 31 + XMin.GetHashCode();
-        hash = hash * 31 + XMax.GetHashCode();
-        hash = hash * 31 + YMin.GetHashCode();
-        hash = hash * 31 + YMax.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (BoxBase*)ptr;
-        FP.Serialize(&p->XMax, serializer);
-        FP.Serialize(&p->XMin, serializer);
-        FP.Serialize(&p->YMax, serializer);
-        FP.Serialize(&p->YMin, serializer);
         FPVector2.Serialize(&p->RectPos, serializer);
         FPVector2.Serialize(&p->RectWH, serializer);
     }
@@ -506,26 +490,18 @@ namespace Quantum {
   [StructLayout(LayoutKind.Explicit)]
   [Quantum.Core.DerivedStructAttribute(typeof(BoxBase))]
   public unsafe partial struct Hitbox : IDerivedStruct<BoxBase> {
-    public const Int32 SIZE = 80;
+    public const Int32 SIZE = 48;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(68)]
+    [FieldOffset(36)]
     public QBoolean IsProximity;
-    [FieldOffset(32)]
-    public FPVector2 RectPos;
-    [FieldOffset(64)]
-    public Int32 HitNum;
-    [FieldOffset(48)]
-    public FPVector2 RectWH;
-    [FieldOffset(72)]
-    public AssetRef<AttackProperties> AttackProperties;
-    [FieldOffset(8)]
-    public FP XMin;
     [FieldOffset(0)]
-    public FP XMax;
-    [FieldOffset(24)]
-    public FP YMin;
+    public FPVector2 RectPos;
+    [FieldOffset(32)]
+    public Int32 HitNum;
     [FieldOffset(16)]
-    public FP YMax;
+    public FPVector2 RectWH;
+    [FieldOffset(40)]
+    public AssetRef<AttackProperties> AttackProperties;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 17903;
@@ -534,19 +510,11 @@ namespace Quantum {
         hash = hash * 31 + HitNum.GetHashCode();
         hash = hash * 31 + RectWH.GetHashCode();
         hash = hash * 31 + AttackProperties.GetHashCode();
-        hash = hash * 31 + XMin.GetHashCode();
-        hash = hash * 31 + XMax.GetHashCode();
-        hash = hash * 31 + YMin.GetHashCode();
-        hash = hash * 31 + YMax.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (Hitbox*)ptr;
-        FP.Serialize(&p->XMax, serializer);
-        FP.Serialize(&p->XMin, serializer);
-        FP.Serialize(&p->YMax, serializer);
-        FP.Serialize(&p->YMin, serializer);
         FPVector2.Serialize(&p->RectPos, serializer);
         FPVector2.Serialize(&p->RectWH, serializer);
         serializer.Stream.Serialize(&p->HitNum);
@@ -557,24 +525,16 @@ namespace Quantum {
   [StructLayout(LayoutKind.Explicit)]
   [Quantum.Core.DerivedStructAttribute(typeof(BoxBase))]
   public unsafe partial struct Hurtbox : IDerivedStruct<BoxBase> {
-    public const Int32 SIZE = 72;
+    public const Int32 SIZE = 40;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(64)]
-    public QBoolean IsAirborne;
     [FieldOffset(32)]
-    public FPVector2 RectPos;
-    [FieldOffset(68)]
-    public QBoolean IsInvulnerable;
-    [FieldOffset(48)]
-    public FPVector2 RectWH;
-    [FieldOffset(8)]
-    public FP XMin;
+    public QBoolean IsAirborne;
     [FieldOffset(0)]
-    public FP XMax;
-    [FieldOffset(24)]
-    public FP YMin;
+    public FPVector2 RectPos;
+    [FieldOffset(36)]
+    public QBoolean IsInvulnerable;
     [FieldOffset(16)]
-    public FP YMax;
+    public FPVector2 RectWH;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 2113;
@@ -582,19 +542,11 @@ namespace Quantum {
         hash = hash * 31 + RectPos.GetHashCode();
         hash = hash * 31 + IsInvulnerable.GetHashCode();
         hash = hash * 31 + RectWH.GetHashCode();
-        hash = hash * 31 + XMin.GetHashCode();
-        hash = hash * 31 + XMax.GetHashCode();
-        hash = hash * 31 + YMin.GetHashCode();
-        hash = hash * 31 + YMax.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (Hurtbox*)ptr;
-        FP.Serialize(&p->XMax, serializer);
-        FP.Serialize(&p->XMin, serializer);
-        FP.Serialize(&p->YMax, serializer);
-        FP.Serialize(&p->YMin, serializer);
         FPVector2.Serialize(&p->RectPos, serializer);
         FPVector2.Serialize(&p->RectWH, serializer);
         QBoolean.Serialize(&p->IsAirborne, serializer);
@@ -679,38 +631,22 @@ namespace Quantum {
   [StructLayout(LayoutKind.Explicit)]
   [Quantum.Core.DerivedStructAttribute(typeof(BoxBase))]
   public unsafe partial struct Pushbox : IDerivedStruct<BoxBase> {
-    public const Int32 SIZE = 64;
+    public const Int32 SIZE = 32;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(32)]
-    public FPVector2 RectPos;
-    [FieldOffset(48)]
-    public FPVector2 RectWH;
-    [FieldOffset(8)]
-    public FP XMin;
     [FieldOffset(0)]
-    public FP XMax;
-    [FieldOffset(24)]
-    public FP YMin;
+    public FPVector2 RectPos;
     [FieldOffset(16)]
-    public FP YMax;
+    public FPVector2 RectWH;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 9619;
         hash = hash * 31 + RectPos.GetHashCode();
         hash = hash * 31 + RectWH.GetHashCode();
-        hash = hash * 31 + XMin.GetHashCode();
-        hash = hash * 31 + XMax.GetHashCode();
-        hash = hash * 31 + YMin.GetHashCode();
-        hash = hash * 31 + YMax.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (Pushbox*)ptr;
-        FP.Serialize(&p->XMax, serializer);
-        FP.Serialize(&p->XMin, serializer);
-        FP.Serialize(&p->YMax, serializer);
-        FP.Serialize(&p->YMin, serializer);
         FPVector2.Serialize(&p->RectPos, serializer);
         FPVector2.Serialize(&p->RectWH, serializer);
     }
@@ -1078,7 +1014,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct FighterData : Quantum.IComponent {
-    public const Int32 SIZE = 8808;
+    public const Int32 SIZE = 8776;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(48)]
     public AssetRef<FighterConstants> Constants;
@@ -1110,7 +1046,7 @@ namespace Quantum {
     public QListPtr<Hurtbox> HurtboxList;
     [FieldOffset(104)]
     public Pushbox Pushbox;
-    [FieldOffset(168)]
+    [FieldOffset(136)]
     [FramePrinter.FixedArrayAttribute(typeof(Input), 90)]
     private fixed Byte _InputHistory_[8640];
     [FieldOffset(16)]

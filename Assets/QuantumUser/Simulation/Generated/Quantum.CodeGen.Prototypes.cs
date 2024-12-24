@@ -208,18 +208,10 @@ namespace Quantum.Prototypes {
   public unsafe partial class BoxBasePrototype : StructPrototype {
     public FPVector2 RectPos;
     public FPVector2 RectWH;
-    public FP XMin;
-    public FP XMax;
-    public FP YMin;
-    public FP YMax;
     partial void MaterializeUser(Frame frame, ref Quantum.BoxBase result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.BoxBase result, in PrototypeMaterializationContext context = default) {
         result.RectPos = this.RectPos;
         result.RectWH = this.RectWH;
-        result.XMin = this.XMin;
-        result.XMax = this.XMax;
-        result.YMin = this.YMin;
-        result.YMax = this.YMax;
         MaterializeUser(frame, ref result, in context);
     }
   }
@@ -301,10 +293,6 @@ namespace Quantum.Prototypes {
     public Int32 HitNum;
     public FPVector2 RectWH;
     public AssetRef<AttackProperties> AttackProperties;
-    public FP XMin;
-    public FP XMax;
-    public FP YMin;
-    public FP YMax;
     partial void MaterializeUser(Frame frame, ref Quantum.Hitbox result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.Hitbox result, in PrototypeMaterializationContext context = default) {
         result.IsProximity = this.IsProximity;
@@ -312,10 +300,6 @@ namespace Quantum.Prototypes {
         result.HitNum = this.HitNum;
         result.RectWH = this.RectWH;
         result.AttackProperties = this.AttackProperties;
-        result.XMin = this.XMin;
-        result.XMax = this.XMax;
-        result.YMin = this.YMin;
-        result.YMax = this.YMax;
         MaterializeUser(frame, ref result, in context);
     }
   }
@@ -326,20 +310,12 @@ namespace Quantum.Prototypes {
     public FPVector2 RectPos;
     public QBoolean IsInvulnerable;
     public FPVector2 RectWH;
-    public FP XMin;
-    public FP XMax;
-    public FP YMin;
-    public FP YMax;
     partial void MaterializeUser(Frame frame, ref Quantum.Hurtbox result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.Hurtbox result, in PrototypeMaterializationContext context = default) {
         result.IsAirborne = this.IsAirborne;
         result.RectPos = this.RectPos;
         result.IsInvulnerable = this.IsInvulnerable;
         result.RectWH = this.RectWH;
-        result.XMin = this.XMin;
-        result.XMax = this.XMax;
-        result.YMin = this.YMin;
-        result.YMax = this.YMax;
         MaterializeUser(frame, ref result, in context);
     }
   }
@@ -387,18 +363,10 @@ namespace Quantum.Prototypes {
   public unsafe partial class PushboxPrototype : StructPrototype {
     public FPVector2 RectPos;
     public FPVector2 RectWH;
-    public FP XMin;
-    public FP XMax;
-    public FP YMin;
-    public FP YMax;
     partial void MaterializeUser(Frame frame, ref Quantum.Pushbox result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.Pushbox result, in PrototypeMaterializationContext context = default) {
         result.RectPos = this.RectPos;
         result.RectWH = this.RectWH;
-        result.XMin = this.XMin;
-        result.XMax = this.XMax;
-        result.YMin = this.YMin;
-        result.YMax = this.YMax;
         MaterializeUser(frame, ref result, in context);
     }
   }

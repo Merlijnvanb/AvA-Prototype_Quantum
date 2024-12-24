@@ -21,7 +21,7 @@ MonoBehaviour:
   IsMovementState: 1
   GuardType: 0
   MovementType: 0
-  FrameCount: 18
+  FrameCount: 15
   IsLoop: 0
   LoopFromFrame: 0
   IsAlwaysCancelable: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
       X:
         RawValue: 0
       Y:
-        RawValue: 1179648
+        RawValue: 983040
     UseBaseRect: 1
     RectPos:
       X:
@@ -50,7 +50,7 @@ MonoBehaviour:
       X:
         RawValue: 0
       Y:
-        RawValue: 1179648
+        RawValue: 983040
     UseBaseRect: 1
     RectPos:
       X:
