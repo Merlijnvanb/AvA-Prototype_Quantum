@@ -9,6 +9,7 @@ component FighterData
     bool IsFacingRight;
     
     int requestedSideSwitch;
+    bool ProximityGuard;
     
     int Health;
     int HitStun;
@@ -23,6 +24,8 @@ component FighterData
     
     array<Input>[90] InputHistory;
     int InputHeadIndex;
+    
+    dictionary<AttackID, int> AttackRegistry;
 }
 
 struct Hitbox : BoxBase

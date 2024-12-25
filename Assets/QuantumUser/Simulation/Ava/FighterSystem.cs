@@ -48,6 +48,18 @@ namespace Quantum.Ava
         private void IncrementState(Frame f, ref Filter filter)
         {
             var fd = filter.FighterData;
+
+            if (fd->HitStun != 0)
+            {
+                fd->HitStun--;
+                return;
+            }
+
+            if (fd->BlockStun != 0)
+            {
+                fd->BlockStun--;
+                return;
+            }
             
             fd->StateFrame++;
         }

@@ -56,6 +56,7 @@ namespace Quantum.Ava
             fighterData->HurtboxList = f.AllocateList<Hurtbox>();
             fighterData->Pushbox = new Pushbox();
             fighterData->InputHeadIndex = -1;
+            fighterData->AttackRegistry = f.AllocateDictionary<AttackID, int>();
 
             f.Add(fighterEntity, new PlayerLink { PlayerRef = player });
         }

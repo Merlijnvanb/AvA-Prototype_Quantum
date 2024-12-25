@@ -66,7 +66,7 @@ namespace Quantum.Ava
 
         private static FPVector2 ConvertRectPos(FPVector2 rectPos, FighterData* fd)
         {
-            var sign = fd->IsFacingRight ? -1 : 1;
+            var sign = fd->IsFacingRight ? 1 : -1;
             return new FPVector2(fd->Position.X + rectPos.X * sign, fd->Position.Y + rectPos.Y);
         }
     }

@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9f5bbd7015499e43ab6264ee125a7c1, type: 3}
-  m_Name: BACKWARD
+  m_Name: HITSTUN
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/FighterData/States/BACKWARD
+    Path: QuantumUser/Resources/FighterData/States/HITSTUN
     Guid:
-      Value: 316527148060347175
-  StateID: 3
-  IsGuardState: 1
+      Value: 318592339748154073
+  StateID: 21
+  IsGuardState: 0
   IsMovementState: 0
   GuardType: 0
   MovementType: 0
-  FrameCount: 0
+  FrameCount: 1
   IsLoop: 0
   LoopFromFrame: 0
-  IsAlwaysCancelable: 1
+  IsAlwaysCancelable: 0
   Hitboxes: []
   Hurtboxes:
   - StartEndFrame:
       X:
         RawValue: 0
       Y:
-        RawValue: 0
+        RawValue: 65536
     UseBaseRect: 1
     RectPos:
       X:
@@ -50,7 +50,7 @@ MonoBehaviour:
       X:
         RawValue: 0
       Y:
-        RawValue: 0
+        RawValue: 65536
     UseBaseRect: 1
     RectPos:
       X:

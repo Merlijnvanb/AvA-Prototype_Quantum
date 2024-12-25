@@ -53,11 +53,9 @@ namespace Quantum {
     STAND_LIGHT,
     STAND_MEDIUM,
     STAND_HEAVY,
-    STAND_SPECIAL,
     CROUCH_LIGHT,
     CROUCH_MEDIUM,
     CROUCH_HEAVY,
-    CROUCH_SPECIAL,
   }
   public enum StateID : int {
     STAND,
@@ -1014,43 +1012,47 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct FighterData : Quantum.IComponent {
-    public const Int32 SIZE = 8776;
+    public const Int32 SIZE = 8784;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(48)]
+    [FieldOffset(56)]
     public AssetRef<FighterConstants> Constants;
     [FieldOffset(4)]
     public Int32 FighterID;
-    [FieldOffset(56)]
+    [FieldOffset(64)]
     public FPVector2 Position;
-    [FieldOffset(88)]
+    [FieldOffset(96)]
     public FPVector2 Velocity;
-    [FieldOffset(72)]
+    [FieldOffset(80)]
     public FPVector2 Pushback;
     [FieldOffset(28)]
     public QBoolean IsFacingRight;
     [FieldOffset(24)]
     public Int32 requestedSideSwitch;
+    [FieldOffset(32)]
+    public QBoolean ProximityGuard;
     [FieldOffset(8)]
     public Int32 Health;
     [FieldOffset(12)]
     public Int32 HitStun;
     [FieldOffset(0)]
     public Int32 BlockStun;
-    [FieldOffset(40)]
+    [FieldOffset(48)]
     public StateID CurrentState;
     [FieldOffset(20)]
     public Int32 StateFrame;
-    [FieldOffset(32)]
+    [FieldOffset(40)]
     public QListPtr<Hitbox> HitboxList;
-    [FieldOffset(36)]
+    [FieldOffset(44)]
     public QListPtr<Hurtbox> HurtboxList;
-    [FieldOffset(104)]
+    [FieldOffset(112)]
     public Pushbox Pushbox;
-    [FieldOffset(136)]
+    [FieldOffset(144)]
     [FramePrinter.FixedArrayAttribute(typeof(Input), 90)]
     private fixed Byte _InputHistory_[8640];
     [FieldOffset(16)]
     public Int32 InputHeadIndex;
+    [FieldOffset(36)]
+    public QDictionaryPtr<AttackID, Int32> AttackRegistry;
     public FixedArray<Input> InputHistory {
       get {
         fixed (byte* p = _InputHistory_) { return new FixedArray<Input>(p, 96, 90); }
@@ -1066,6 +1068,7 @@ namespace Quantum {
         hash = hash * 31 + Pushback.GetHashCode();
         hash = hash * 31 + IsFacingRight.GetHashCode();
         hash = hash * 31 + requestedSideSwitch.GetHashCode();
+        hash = hash * 31 + ProximityGuard.GetHashCode();
         hash = hash * 31 + Health.GetHashCode();
         hash = hash * 31 + HitStun.GetHashCode();
         hash = hash * 31 + BlockStun.GetHashCode();
@@ -1076,12 +1079,14 @@ namespace Quantum {
         hash = hash * 31 + Pushbox.GetHashCode();
         hash = hash * 31 + HashCodeUtils.GetArrayHashCode(InputHistory);
         hash = hash * 31 + InputHeadIndex.GetHashCode();
+        hash = hash * 31 + AttackRegistry.GetHashCode();
         return hash;
       }
     }
     public void ClearPointers(FrameBase f, EntityRef entity) {
       HitboxList = default;
       HurtboxList = default;
+      AttackRegistry = default;
     }
     public static void OnRemoved(FrameBase frame, EntityRef entity, void* ptr) {
       var p = (Quantum.FighterData*)ptr;
@@ -1097,6 +1102,8 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->StateFrame);
         serializer.Stream.Serialize(&p->requestedSideSwitch);
         QBoolean.Serialize(&p->IsFacingRight, serializer);
+        QBoolean.Serialize(&p->ProximityGuard, serializer);
+        QDictionary.Serialize(&p->AttackRegistry, serializer, Statics.SerializeAttackID, Statics.SerializeInt32);
         QList.Serialize(&p->HitboxList, serializer, Statics.SerializeHitbox);
         QList.Serialize(&p->HurtboxList, serializer, Statics.SerializeHurtbox);
         serializer.Stream.Serialize((Int32*)&p->CurrentState);
@@ -1220,6 +1227,7 @@ namespace Quantum {
     public static FrameSerializer.Delegate SerializeInt32;
     public static FrameSerializer.Delegate SerializeBlendTreeWeights;
     public static FrameSerializer.Delegate SerializeFP;
+    public static FrameSerializer.Delegate SerializeAttackID;
     public static FrameSerializer.Delegate SerializeHitbox;
     public static FrameSerializer.Delegate SerializeHurtbox;
     public static FrameSerializer.Delegate SerializeInput;
@@ -1228,6 +1236,7 @@ namespace Quantum {
       SerializeInt32 = (v, s) => {{ s.Stream.Serialize((Int32*)v); }};
       SerializeBlendTreeWeights = Quantum.BlendTreeWeights.Serialize;
       SerializeFP = FP.Serialize;
+      SerializeAttackID = (v, s) => {{ s.Stream.Serialize((Int32*)v); }};
       SerializeHitbox = Quantum.Hitbox.Serialize;
       SerializeHurtbox = Quantum.Hurtbox.Serialize;
       SerializeInput = Quantum.Input.Serialize;

@@ -56,6 +56,12 @@ namespace Quantum.Prototypes {
     public Quantum.Prototypes.BlendTreeWeightsPrototype Value;
   }
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(System.Collections.Generic.KeyValuePair<AttackID, Int32>))]
+  public unsafe class DictionaryEntry_AttackID_Int32 : Quantum.Prototypes.DictionaryEntry {
+    public Quantum.QEnum32<AttackID> Key;
+    public Int32 Value;
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.AnimatorComponent))]
   public unsafe class AnimatorComponentPrototype : ComponentPrototype<Quantum.AnimatorComponent> {
     public AssetRef<AnimatorGraph> AnimatorGraph;
@@ -225,6 +231,7 @@ namespace Quantum.Prototypes {
     public FPVector2 Pushback;
     public QBoolean IsFacingRight;
     public Int32 requestedSideSwitch;
+    public QBoolean ProximityGuard;
     public Int32 Health;
     public Int32 HitStun;
     public Int32 BlockStun;
@@ -238,6 +245,9 @@ namespace Quantum.Prototypes {
     [ArrayLengthAttribute(90)]
     public Quantum.Prototypes.InputPrototype[] InputHistory = new Quantum.Prototypes.InputPrototype[90];
     public Int32 InputHeadIndex;
+    [DictionaryAttribute()]
+    [DynamicCollectionAttribute()]
+    public DictionaryEntry_AttackID_Int32[] AttackRegistry = {};
     partial void MaterializeUser(Frame frame, ref Quantum.FighterData result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.FighterData component = default;
@@ -252,6 +262,7 @@ namespace Quantum.Prototypes {
         result.Pushback = this.Pushback;
         result.IsFacingRight = this.IsFacingRight;
         result.requestedSideSwitch = this.requestedSideSwitch;
+        result.ProximityGuard = this.ProximityGuard;
         result.Health = this.Health;
         result.HitStun = this.HitStun;
         result.BlockStun = this.BlockStun;
@@ -282,6 +293,18 @@ namespace Quantum.Prototypes {
           this.InputHistory[i].Materialize(frame, ref *result.InputHistory.GetPointer(i), in context);
         }
         result.InputHeadIndex = this.InputHeadIndex;
+        if (this.AttackRegistry.Length == 0) {
+          result.AttackRegistry = default;
+        } else {
+          var dict = frame.AllocateDictionary(out result.AttackRegistry, this.AttackRegistry.Length);
+          for (int i = 0; i < this.AttackRegistry.Length; ++i) {
+            Quantum.AttackID tmpKey = default;
+            Int32 tmpValue = default;
+            tmpKey = this.AttackRegistry[i].Key;
+            tmpValue = this.AttackRegistry[i].Value;
+            PrototypeValidator.AddToDictionary(dict, tmpKey, tmpValue, in context);
+          }
+        }
         MaterializeUser(frame, ref result, in context);
     }
   }

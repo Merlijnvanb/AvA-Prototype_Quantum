@@ -12,6 +12,8 @@ namespace Quantum
     
     public class AttackProperties : AssetObject
     {
+        public AttackID AttackID;
+        
         [Header("Damage")]
         public int BaseDamage;
 

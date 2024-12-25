@@ -10,28 +10,62 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9f5bbd7015499e43ab6264ee125a7c1, type: 3}
-  m_Name: BACKWARD
+  m_Name: STAND_LIGHT
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/FighterData/States/BACKWARD
+    Path: QuantumUser/Resources/FighterData/States/Attacks/STAND_LIGHT
     Guid:
-      Value: 316527148060347175
-  StateID: 3
-  IsGuardState: 1
+      Value: 337996404355072760
+  StateID: 9
+  IsGuardState: 0
   IsMovementState: 0
   GuardType: 0
   MovementType: 0
-  FrameCount: 0
+  FrameCount: 12
   IsLoop: 0
   LoopFromFrame: 0
-  IsAlwaysCancelable: 1
-  Hitboxes: []
+  IsAlwaysCancelable: 0
+  Hitboxes:
+  - StartEndFrame:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 262144
+    RectPos:
+      X:
+        RawValue: 16384
+      Y:
+        RawValue: 32768
+    RectWH:
+      X:
+        RawValue: 26214
+      Y:
+        RawValue: 19661
+    IsProximity: 1
+    AttackProperties: {fileID: 11400000, guid: 1d6065cc9749c1a4099b5894e280ae57, type: 2}
+  - StartEndFrame:
+      X:
+        RawValue: 327680
+      Y:
+        RawValue: 458752
+    RectPos:
+      X:
+        RawValue: 16384
+      Y:
+        RawValue: 32768
+    RectWH:
+      X:
+        RawValue: 26214
+      Y:
+        RawValue: 19661
+    IsProximity: 0
+    AttackProperties: {fileID: 11400000, guid: 1d6065cc9749c1a4099b5894e280ae57, type: 2}
   Hurtboxes:
   - StartEndFrame:
       X:
         RawValue: 0
       Y:
-        RawValue: 0
+        RawValue: 786432
     UseBaseRect: 1
     RectPos:
       X:
@@ -50,7 +84,7 @@ MonoBehaviour:
       X:
         RawValue: 0
       Y:
-        RawValue: 0
+        RawValue: 786432
     UseBaseRect: 1
     RectPos:
       X:

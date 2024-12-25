@@ -24,7 +24,7 @@ MonoBehaviour:
   FrameCount: 0
   IsLoop: 0
   LoopFromFrame: 0
-  Statuses: []
+  IsAlwaysCancelable: 1
   Hitboxes: []
   Hurtboxes:
   - StartEndFrame:
@@ -43,6 +43,8 @@ MonoBehaviour:
         RawValue: 0
       Y:
         RawValue: 0
+    IsAirborne: 0
+    IsInvulnerable: 0
   Pushboxes:
   - StartEndFrame:
       X:
@@ -61,4 +63,3 @@ MonoBehaviour:
       Y:
         RawValue: 0
   Movements: []
-  IsAlwaysCancelable: 1
