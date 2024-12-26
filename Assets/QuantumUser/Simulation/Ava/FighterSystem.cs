@@ -37,11 +37,11 @@ namespace Quantum.Ava
             var fd = filter.FighterData;
             var constants = f.FindAsset<FighterConstants>(fd->Constants);
 
-            if (fd->requestedSideSwitch != 0 && (fd->StateFrame > constants.States[fd->CurrentState].FrameCount ||
+            if (fd->RequestedSideSwitch != 0 && (fd->StateFrame > constants.States[fd->CurrentState].FrameCount ||
                                                  constants.States[fd->CurrentState].IsAlwaysCancelable))
             {
-                fd->IsFacingRight = fd->requestedSideSwitch == 1;
-                fd->requestedSideSwitch = 0;
+                fd->IsFacingRight = fd->RequestedSideSwitch == 1;
+                fd->RequestedSideSwitch = 0;
             }
         }
 

@@ -230,7 +230,8 @@ namespace Quantum.Prototypes {
     public FPVector2 Velocity;
     public FPVector2 Pushback;
     public QBoolean IsFacingRight;
-    public Int32 requestedSideSwitch;
+    public FPVector2 PreviousPushback;
+    public Int32 RequestedSideSwitch;
     public QBoolean ProximityGuard;
     public Int32 Health;
     public Int32 HitStun;
@@ -261,7 +262,8 @@ namespace Quantum.Prototypes {
         result.Velocity = this.Velocity;
         result.Pushback = this.Pushback;
         result.IsFacingRight = this.IsFacingRight;
-        result.requestedSideSwitch = this.requestedSideSwitch;
+        result.PreviousPushback = this.PreviousPushback;
+        result.RequestedSideSwitch = this.RequestedSideSwitch;
         result.ProximityGuard = this.ProximityGuard;
         result.Health = this.Health;
         result.HitStun = this.HitStun;

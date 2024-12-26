@@ -41,13 +41,13 @@ namespace Quantum.Ava
             {
                 if (fighter1->Position.X > fighter2->Position.X + f.Global->SideSwitchThreshold)
                 {
-                    if (fighter1->IsFacingRight) fighter1->requestedSideSwitch = 2;
-                    if (!fighter2->IsFacingRight) fighter2->requestedSideSwitch = 1;
+                    if (fighter1->IsFacingRight) fighter1->RequestedSideSwitch = 2;
+                    if (!fighter2->IsFacingRight) fighter2->RequestedSideSwitch = 1;
                 }
                 else if (fighter1->Position.X < fighter2->Position.X - f.Global->SideSwitchThreshold)
                 {
-                    if (!fighter1->IsFacingRight) fighter1->requestedSideSwitch = 1;
-                    if (fighter2->IsFacingRight) fighter2->requestedSideSwitch = 2;
+                    if (!fighter1->IsFacingRight) fighter1->RequestedSideSwitch = 1;
+                    if (fighter2->IsFacingRight) fighter2->RequestedSideSwitch = 2;
                 }
             }
         }

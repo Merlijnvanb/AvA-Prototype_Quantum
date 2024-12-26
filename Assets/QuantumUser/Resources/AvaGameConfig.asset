@@ -20,8 +20,6 @@ MonoBehaviour:
     RawValue: 655360
   MaxPlayerDistance:
     RawValue: 327680
-  PreRoundTimer: 180
-  RoundTimer: 3000
   DashAllowFrames: 10
   JumpAlterFrames: 4
   DownwardForce:
@@ -30,3 +28,7 @@ MonoBehaviour:
     RawValue: 21845
   SideSwitchThreshold:
     RawValue: 6554
+  PushbackTransferValue:
+    RawValue: 32768
+  PreRoundTimer: 180
+  RoundTimer: 3000

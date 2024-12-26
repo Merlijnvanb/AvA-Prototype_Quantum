@@ -8,7 +8,9 @@ component FighterData
     FPVector2 Pushback;
     bool IsFacingRight;
     
-    int requestedSideSwitch;
+    FPVector2 PreviousPushback;
+    
+    int RequestedSideSwitch;
     bool ProximityGuard;
     
     int Health;

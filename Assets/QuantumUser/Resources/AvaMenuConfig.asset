@@ -36,6 +36,12 @@ MonoBehaviour:
       SystemsConfig:
         Id:
           Value: 374774962129888988
+      FighterPrototype:
+        Id:
+          Value: 1349895863255627100
+      BaseConstants:
+        Id:
+          Value: 488114196162400296
       GameConfig:
         Id:
           Value: 506089300520911785

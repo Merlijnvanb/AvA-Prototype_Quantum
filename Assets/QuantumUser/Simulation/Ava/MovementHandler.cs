@@ -71,6 +71,7 @@ namespace Quantum.Ava
 
         private static void CalculatePushback(Frame f, FighterData* fd)
         {
+            fd->PreviousPushback = fd->Pushback;
             if (fd->Pushback.X != 0) fd->Pushback.X -= f.Global->FrictionCoefficient * fd->Pushback.X;
             if (FPMath.Abs(fd->Pushback.X) < FP._0_01) fd->Pushback.X = 0;
             if (fd->Position.Y <= 0) fd->Pushback.Y = 0;

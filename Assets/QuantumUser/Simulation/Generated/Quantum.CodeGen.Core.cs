@@ -1012,7 +1012,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct FighterData : Quantum.IComponent {
-    public const Int32 SIZE = 8784;
+    public const Int32 SIZE = 8800;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(56)]
     public AssetRef<FighterConstants> Constants;
@@ -1020,14 +1020,16 @@ namespace Quantum {
     public Int32 FighterID;
     [FieldOffset(64)]
     public FPVector2 Position;
-    [FieldOffset(96)]
+    [FieldOffset(112)]
     public FPVector2 Velocity;
-    [FieldOffset(80)]
+    [FieldOffset(96)]
     public FPVector2 Pushback;
     [FieldOffset(28)]
     public QBoolean IsFacingRight;
-    [FieldOffset(24)]
-    public Int32 requestedSideSwitch;
+    [FieldOffset(80)]
+    public FPVector2 PreviousPushback;
+    [FieldOffset(20)]
+    public Int32 RequestedSideSwitch;
     [FieldOffset(32)]
     public QBoolean ProximityGuard;
     [FieldOffset(8)]
@@ -1038,15 +1040,15 @@ namespace Quantum {
     public Int32 BlockStun;
     [FieldOffset(48)]
     public StateID CurrentState;
-    [FieldOffset(20)]
+    [FieldOffset(24)]
     public Int32 StateFrame;
     [FieldOffset(40)]
     public QListPtr<Hitbox> HitboxList;
     [FieldOffset(44)]
     public QListPtr<Hurtbox> HurtboxList;
-    [FieldOffset(112)]
+    [FieldOffset(128)]
     public Pushbox Pushbox;
-    [FieldOffset(144)]
+    [FieldOffset(160)]
     [FramePrinter.FixedArrayAttribute(typeof(Input), 90)]
     private fixed Byte _InputHistory_[8640];
     [FieldOffset(16)]
@@ -1067,7 +1069,8 @@ namespace Quantum {
         hash = hash * 31 + Velocity.GetHashCode();
         hash = hash * 31 + Pushback.GetHashCode();
         hash = hash * 31 + IsFacingRight.GetHashCode();
-        hash = hash * 31 + requestedSideSwitch.GetHashCode();
+        hash = hash * 31 + PreviousPushback.GetHashCode();
+        hash = hash * 31 + RequestedSideSwitch.GetHashCode();
         hash = hash * 31 + ProximityGuard.GetHashCode();
         hash = hash * 31 + Health.GetHashCode();
         hash = hash * 31 + HitStun.GetHashCode();
@@ -1099,8 +1102,8 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->Health);
         serializer.Stream.Serialize(&p->HitStun);
         serializer.Stream.Serialize(&p->InputHeadIndex);
+        serializer.Stream.Serialize(&p->RequestedSideSwitch);
         serializer.Stream.Serialize(&p->StateFrame);
-        serializer.Stream.Serialize(&p->requestedSideSwitch);
         QBoolean.Serialize(&p->IsFacingRight, serializer);
         QBoolean.Serialize(&p->ProximityGuard, serializer);
         QDictionary.Serialize(&p->AttackRegistry, serializer, Statics.SerializeAttackID, Statics.SerializeInt32);
@@ -1109,6 +1112,7 @@ namespace Quantum {
         serializer.Stream.Serialize((Int32*)&p->CurrentState);
         AssetRef.Serialize(&p->Constants, serializer);
         FPVector2.Serialize(&p->Position, serializer);
+        FPVector2.Serialize(&p->PreviousPushback, serializer);
         FPVector2.Serialize(&p->Pushback, serializer);
         FPVector2.Serialize(&p->Velocity, serializer);
         Quantum.Pushbox.Serialize(&p->Pushbox, serializer);

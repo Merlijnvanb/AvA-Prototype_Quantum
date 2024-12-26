@@ -18,6 +18,8 @@ namespace Quantum.Ava
             AgainstFighter(f, fighters);
             FixWallClip(f, fighters);
             AgainstDistance(f, fighters);
+            
+            Log.Debug(FPMath.Abs(fighters[0]->Position.X - fighters[1]->Position.X));
         }
 
         private void AgainstWall(Frame f, FighterData*[] fighters)
@@ -30,13 +32,25 @@ namespace Quantum.Ava
                 if (fighters[i] == null)
                     continue;
 
-                if (fighters[i]->Pushbox.XMin < leftWall)
+                if (fighters[i]->Pushbox.XMin <= leftWall)
                 {
                     ApplyPosition(f, fighters[i], new FPVector2(leftWall - fighters[i]->Pushbox.XMin, 0));
+                    if (fighters[i]->Pushback.X < 0)
+                    {
+                        var otherFighter = i == 0 ? fighters[1] : fighters[0];
+                        otherFighter->Pushback.X = fighters[i]->PreviousPushback.X;
+                        fighters[i]->Pushback.X = 0;
+                    }
                 }
-                else if (fighters[i]->Pushbox.XMax > rightWall)
+                else if (fighters[i]->Pushbox.XMax >= rightWall)
                 {
                     ApplyPosition(f, fighters[i], new FPVector2(rightWall - fighters[i]->Pushbox.XMax, 0));
+                    if (fighters[i]->Pushback.X < 0)
+                    {
+                        var otherFighter = i == 0 ? fighters[1] : fighters[0];
+                        otherFighter->Pushback.X = fighters[i]->PreviousPushback.X;
+                        fighters[i]->Pushback.X = 0;
+                    }
                 }
             }
         }
@@ -74,13 +88,13 @@ namespace Quantum.Ava
                 if (fighters[i] == null)
                     continue;
 
-                if (fighters[i]->Pushbox.XMin < leftWall)
+                if (fighters[i]->Pushbox.XMin <= leftWall)
                 {
                     var adjustment = leftWall - fighters[i]->Pushbox.XMin;
                     ApplyPosition(f, fighters[0], new FPVector2(adjustment, 0));
                     ApplyPosition(f, fighters[1], new FPVector2(adjustment, 0));
                 }
-                if (fighters[i]->Pushbox.XMax > rightWall)
+                if (fighters[i]->Pushbox.XMax >= rightWall)
                 {
                     var adjustment = rightWall - fighters[i]->Pushbox.XMax;
                     ApplyPosition(f, fighters[0], new FPVector2(adjustment, 0));
@@ -98,12 +112,12 @@ namespace Quantum.Ava
             var box2 = fighters[1]->Pushbox;
             var maxDist = f.Global->MaxFighterDistance;
 
-            if (box2.XMax - box1.XMin > maxDist)
+            if (box2.XMax - box1.XMin >= maxDist)
             {
                 ApplyPosition(f, fighters[0], new FPVector2((box2.XMax - box1.XMin - maxDist) / 2, 0));
                 ApplyPosition(f, fighters[1], new FPVector2((box2.XMax - box1.XMin - maxDist) * -1 / 2, 0));
             }
-            else if (box1.XMax - box2.XMin > maxDist)
+            else if (box1.XMax - box2.XMin >= maxDist)
             {
                 ApplyPosition(f, fighters[0], new FPVector2((box1.XMax - box2.XMin - maxDist) * -1 / 2, 0));
                 ApplyPosition(f, fighters[1], new FPVector2((box1.XMax - box2.XMin - maxDist) / 2, 0));
