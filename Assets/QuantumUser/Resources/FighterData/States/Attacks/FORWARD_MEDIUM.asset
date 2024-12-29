@@ -10,28 +10,62 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9f5bbd7015499e43ab6264ee125a7c1, type: 3}
-  m_Name: BLOCK_CROUCHING
+  m_Name: FORWARD_MEDIUM
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/FighterData/States/BLOCK_CROUCHING
+    Path: QuantumUser/Resources/FighterData/States/Attacks/FORWARD_MEDIUM
     Guid:
-      Value: 484263040408239574
-  StateID: 21
-  IsGuardState: 1
+      Value: 409100139191279667
+  StateID: 17
+  IsGuardState: 0
   IsMovementState: 0
-  GuardType: 1
+  GuardType: 0
   MovementType: 0
-  FrameCount: 1
+  FrameCount: 30
   IsLoop: 0
   LoopFromFrame: 0
   IsAlwaysCancelable: 0
-  Hitboxes: []
+  Hitboxes:
+  - StartEndFrame:
+      X:
+        RawValue: 327680
+      Y:
+        RawValue: 1376256
+    RectPos:
+      X:
+        RawValue: 19661
+      Y:
+        RawValue: 29491
+    RectWH:
+      X:
+        RawValue: 29491
+      Y:
+        RawValue: 22938
+    IsProximity: 1
+    AttackProperties: {fileID: 11400000, guid: 273f79a98e9b40341a3a8990ee903a1e, type: 2}
+  - StartEndFrame:
+      X:
+        RawValue: 1376256
+      Y:
+        RawValue: 1507328
+    RectPos:
+      X:
+        RawValue: 19661
+      Y:
+        RawValue: 29491
+    RectWH:
+      X:
+        RawValue: 29491
+      Y:
+        RawValue: 22938
+    IsProximity: 0
+    AttackProperties: {fileID: 11400000, guid: 273f79a98e9b40341a3a8990ee903a1e, type: 2}
   Hurtboxes:
   - StartEndFrame:
       X:
         RawValue: 0
       Y:
-        RawValue: 65536
+        RawValue: 1966080
     UseBaseRect: 1
     RectPos:
       X:
@@ -50,7 +84,7 @@ MonoBehaviour:
       X:
         RawValue: 0
       Y:
-        RawValue: 65536
+        RawValue: 1966080
     UseBaseRect: 1
     RectPos:
       X:

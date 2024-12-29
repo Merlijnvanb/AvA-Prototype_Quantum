@@ -10,28 +10,62 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9f5bbd7015499e43ab6264ee125a7c1, type: 3}
-  m_Name: BLOCK_CROUCHING
+  m_Name: CROUCH_LIGHT
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/FighterData/States/BLOCK_CROUCHING
+    Path: QuantumUser/Resources/FighterData/States/Attacks/CROUCH_LIGHT
     Guid:
-      Value: 484263040408239574
-  StateID: 21
-  IsGuardState: 1
+      Value: 454969609257803817
+  StateID: 13
+  IsGuardState: 0
   IsMovementState: 0
-  GuardType: 1
+  GuardType: 0
   MovementType: 0
-  FrameCount: 1
+  FrameCount: 15
   IsLoop: 0
   LoopFromFrame: 0
   IsAlwaysCancelable: 0
-  Hitboxes: []
+  Hitboxes:
+  - StartEndFrame:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 327680
+    RectPos:
+      X:
+        RawValue: 16384
+      Y:
+        RawValue: 0
+    RectWH:
+      X:
+        RawValue: 22938
+      Y:
+        RawValue: 19661
+    IsProximity: 1
+    AttackProperties: {fileID: 11400000, guid: 76c1e1754043f8f4ba9aaa2198ee753c, type: 2}
+  - StartEndFrame:
+      X:
+        RawValue: 393216
+      Y:
+        RawValue: 524288
+    RectPos:
+      X:
+        RawValue: 16384
+      Y:
+        RawValue: 0
+    RectWH:
+      X:
+        RawValue: 22938
+      Y:
+        RawValue: 19661
+    IsProximity: 0
+    AttackProperties: {fileID: 11400000, guid: 76c1e1754043f8f4ba9aaa2198ee753c, type: 2}
   Hurtboxes:
   - StartEndFrame:
       X:
         RawValue: 0
       Y:
-        RawValue: 65536
+        RawValue: 983040
     UseBaseRect: 1
     RectPos:
       X:
@@ -50,7 +84,7 @@ MonoBehaviour:
       X:
         RawValue: 0
       Y:
-        RawValue: 65536
+        RawValue: 983040
     UseBaseRect: 1
     RectPos:
       X:

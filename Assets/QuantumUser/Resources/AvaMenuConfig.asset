@@ -26,7 +26,7 @@ MonoBehaviour:
     ScenePath: Assets/Scenes/Grid.unity
     Preview: {fileID: 0}
     RuntimeConfig:
-      Seed: 0
+      Seed: -1292393661
       Map:
         Id:
           Value: 341200302543098157
@@ -36,7 +36,7 @@ MonoBehaviour:
       SystemsConfig:
         Id:
           Value: 374774962129888988
-      FighterPrototype:
+      BaseFighter:
         Id:
           Value: 1349895863255627100
       BaseConstants:

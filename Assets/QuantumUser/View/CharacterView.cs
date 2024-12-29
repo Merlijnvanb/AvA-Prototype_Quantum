@@ -1,9 +1,8 @@
-using Unity.Cinemachine;
-
 namespace Quantum.Ava
 {
     using Quantum;
     using UnityEngine;
+    using Unity.Cinemachine;
 
     public class CharacterView : QuantumEntityViewComponent<IQuantumViewContext>
     {

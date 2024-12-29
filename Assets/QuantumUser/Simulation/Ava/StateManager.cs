@@ -11,21 +11,45 @@ namespace Quantum.Ava
             var fData = filter.FighterData;
             var fConstants = f.FindAsset(fData->Constants);
             
-            if (CheckAttackState(f, fData, fConstants)) return;
-            if (CheckJumpState(f, fData, fConstants, f.Global->JumpAlterFrames)) return;
-            if (CheckDashState(f, fData, fConstants, f.Global->DashAllowFrames)) return;
-            if (CheckMovementState(f, fData, fConstants)) return;
+            Log.Debug(fData->ProximityGuard);
+
+            if (CheckAttackState(f, fData, fConstants) ||
+                CheckJumpState(f, fData, fConstants, f.Global->JumpAlterFrames) ||
+                CheckDashState(f, fData, fConstants, f.Global->DashAllowFrames) ||
+                CheckMovementState(f, fData, fConstants))
+            {
+                fData->ProximityGuard = false;
+                return;
+            }
 
             RequestState(f, fData, fConstants, StateID.STAND);
+            fData->ProximityGuard = false;
         }
 
         private static bool CheckAttackState(Frame f, FighterData* fd, FighterConstants fc)
         {
             var currentInput = fd->InputHistory[fd->InputHeadIndex];
+            
+            if (currentInput.Medium.WasPressed)
+            {
+                if (currentInput.Down)
+                    RequestState(f, fd, fc, StateID.CROUCH_MEDIUM);
+                else if (InputUtils.IsDirection(fd, currentInput, Direction.Forward))
+                    RequestState(f, fd, fc, StateID.FORWARD_MEDIUM);
+                else
+                    RequestState(f, fd, fc, StateID.STAND_MEDIUM);
+
+                return true;
+            }
 
             if (currentInput.Light.WasPressed)
             {
-                RequestState(f, fd, fc, StateID.STAND_LIGHT);
+                if (currentInput.Down)
+                    RequestState(f, fd, fc, StateID.CROUCH_LIGHT);
+                else
+                    RequestState(f, fd, fc, StateID.STAND_LIGHT);
+
+                return true;
             }
             
             return false;
@@ -39,9 +63,8 @@ namespace Quantum.Ava
             {
                 RequestState(f, fd, fc, StateID.JUMP_NEUTRAL);
                 if (fd->CurrentState == StateID.JUMP_NEUTRAL && fd->StateFrame < jumpAlterFrames)
-                {
                     SetCurrentState(f, fd, InputUtils.CheckJumpType(fd, currentInput), fd->StateFrame);
-                }
+                return true;
             }
             
             return false;
@@ -71,6 +94,15 @@ namespace Quantum.Ava
             
             if (currentInput.Down)
             {
+                if (InputUtils.IsDirection(fd, currentInput, Direction.Backward))
+                {
+                    if (fd->ProximityGuard)
+                        RequestState(f, fd, fc, StateID.PROXIMITY_CROUCHING);
+                    else 
+                        RequestState(f, fd, fc, StateID.CROUCH_BACK);
+                    return true;
+                }
+                
                 RequestState(f, fd, fc, StateID.CROUCH);
                 return true;
             }
@@ -81,9 +113,13 @@ namespace Quantum.Ava
             }
             if (InputUtils.IsDirection(fd, currentInput, Direction.Backward))
             {
-                RequestState(f, fd, fc, StateID.BACKWARD);
+                if (fd->ProximityGuard)
+                    RequestState(f, fd, fc, StateID.PROXIMITY_STANDING);
+                else
+                    RequestState(f, fd, fc, StateID.BACKWARD);
                 return true;
             }
+            
             return false;
         }
 
@@ -112,8 +148,8 @@ namespace Quantum.Ava
             fd->CurrentState = stateID;
             fd->StateFrame = frame;
 
-            var registry = f.ResolveDictionary(fd->AttackRegistry);
-            registry.Clear();
+            if (f.TryResolveDictionary(fd->AttackRegistry, out var registry))
+                registry.Clear();
         }
     }
 }

@@ -25,8 +25,7 @@ namespace Quantum.Ava
                     RectPos = ConvertRectPos(hitboxData.RectPos, fd),
                     RectWH = hitboxData.RectWH,
                     IsProximity = hitboxData.IsProximity,
-                    AttackProperties = hitboxData.IsProximity ?
-                        null : hitboxData.AttackProperties
+                    AttackProperties = hitboxData.AttackProperties
                 };
                 
                 hitboxes.Add(hitBox);

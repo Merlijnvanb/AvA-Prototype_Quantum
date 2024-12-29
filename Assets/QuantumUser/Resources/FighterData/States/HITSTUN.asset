@@ -16,7 +16,7 @@ MonoBehaviour:
     Path: QuantumUser/Resources/FighterData/States/HITSTUN
     Guid:
       Value: 318592339748154073
-  StateID: 21
+  StateID: 23
   IsGuardState: 0
   IsMovementState: 0
   GuardType: 0

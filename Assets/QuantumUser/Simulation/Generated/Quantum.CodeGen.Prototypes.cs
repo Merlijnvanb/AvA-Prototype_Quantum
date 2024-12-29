@@ -190,6 +190,22 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.AttackResult))]
+  public unsafe partial class AttackResultPrototype : StructPrototype {
+    public QBoolean IsHit;
+    public QBoolean IsProximity;
+    public AssetRef<AttackProperties> AttackProperties;
+    public Int32 HitNum;
+    partial void MaterializeUser(Frame frame, ref Quantum.AttackResult result, in PrototypeMaterializationContext context);
+    public void Materialize(Frame frame, ref Quantum.AttackResult result, in PrototypeMaterializationContext context = default) {
+        result.IsHit = this.IsHit;
+        result.IsProximity = this.IsProximity;
+        result.AttackProperties = this.AttackProperties;
+        result.HitNum = this.HitNum;
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.BlendTreeWeights))]
   public unsafe partial class BlendTreeWeightsPrototype : StructPrototype {
     [DynamicCollectionAttribute()]

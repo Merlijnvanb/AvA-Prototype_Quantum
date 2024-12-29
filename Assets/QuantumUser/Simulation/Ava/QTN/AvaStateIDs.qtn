@@ -27,11 +27,15 @@ enum StateID
     CROUCH_HEAVY,
     CROUCH_SPECIAL,
     
+    // Unique Attack
+    FORWARD_MEDIUM,
+    
     // Guard States
     PROXIMITY_STANDING,
     PROXIMITY_CROUCHING,
     BLOCK_STANDING,
     BLOCK_CROUCHING,
+    CROUCH_BACK,
     
     // Hit States
     HITSTUN,
@@ -48,4 +52,5 @@ enum AttackID
     CROUCH_LIGHT,
     CROUCH_MEDIUM,
     CROUCH_HEAVY,
+    FORWARD_MEDIUM,
 }

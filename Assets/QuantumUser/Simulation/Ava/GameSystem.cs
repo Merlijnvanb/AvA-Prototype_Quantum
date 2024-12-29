@@ -27,11 +27,104 @@ namespace Quantum.Ava
         {
             if (f.Global->PreRoundTimer > 0)
                 f.Global->PreRoundTimer--;
-            else
+            else if (f.Global->RoundTimer > 0)
+            {
+                f.Global->RoundTimer--;
                 f.Global->ParseInputs = true;
+
+                if (SetScore(f))
+                {
+                    ResetRound(f);
+                }
+            }
+            else
+            {
+                TimeOut(f);
+            }
             
             CheckSides(f);
             f.Events.UpdateUI(f.Global->Fighter1, f.Global->Fighter2, f.Global->Fighter1Score, f.Global->Fighter2Score);
+        }
+        
+        private bool SetScore(Frame f)
+        {
+            if (!f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter1, out var fighter1) ||
+                !f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter2, out var fighter2))
+                return false;
+            
+            bool p1Dead = fighter1->Health <= 0;
+            bool p2Dead = fighter2->Health <= 0;
+
+            if (p1Dead && !p2Dead)
+            {
+                f.Global->Fighter2Score++;
+                return true;
+            }
+            if (p2Dead && !p1Dead)
+            {
+                f.Global->Fighter1Score++;
+                return true;
+            }
+            if (p1Dead && p2Dead)
+            {
+                f.Global->Fighter1Score++;
+                f.Global->Fighter2Score++;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void TimeOut(Frame f)
+        {
+            if (!f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter1, out var fighter1) ||
+                !f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter2, out var fighter2))
+                return;
+            
+            var p1Health = fighter1->Health;
+            var p2Health = fighter2->Health;
+            
+            if (p1Health > p2Health) f.Global->Fighter1Score++;
+            if (p2Health > p1Health) f.Global->Fighter2Score++;
+            if (p1Health == p2Health)
+            {
+                f.Global->Fighter1Score++;
+                f.Global->Fighter2Score++;
+            }
+            
+            ResetRound(f);
+        }
+
+        private void ResetRound(Frame f)
+        {
+            f.Global->ParseInputs = false;
+            
+            var gameConfig = f.FindAsset<AvaGameConfig>(f.RuntimeConfig.GameConfig);
+            f.Global->PreRoundTimer = gameConfig.PreRoundTimer;
+            f.Global->RoundTimer = gameConfig.RoundTimer;
+            
+            if (!f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter1, out var fighter1) ||
+                !f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter2, out var fighter2))
+                return;
+            
+            ResetFighter(f, fighter1, true);
+            ResetFighter(f, fighter2, false);
+        }
+
+        private void ResetFighter(Frame f, FighterData* fd, bool p1)
+        {
+            fd->Position = p1 ? new FPVector2(-1, 0) : new FPVector2(1, 0);
+            fd->Velocity = new FPVector2(0, 0);
+            fd->Pushback = new FPVector2(0, 0);
+            fd->IsFacingRight = p1;
+            fd->PreviousPushback = new FPVector2(0, 0);
+            fd->RequestedSideSwitch = 0;
+            fd->ProximityGuard = false;
+            fd->Health = f.FindAsset(fd->Constants).MaxHealth;
+            fd->HitStun = 0;
+            fd->BlockStun = 0;
+            fd->CurrentState = StateID.STAND;
+            fd->StateFrame = 0;
         }
 
         private void CheckSides(Frame f)

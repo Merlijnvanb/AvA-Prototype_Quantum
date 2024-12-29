@@ -7,14 +7,6 @@ namespace Quantum.Ava
     [Preserve]
     public unsafe class HitRegSystem : SystemMainThread
     {
-        private struct AttackResult
-        {
-            public bool IsHit;
-            public bool IsProximity;
-            public AttackProperties AttackProperties;
-            public int HitNum;
-        }
-        
         public override void Update(Frame f)
         {
             if (!f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter1, out var fd1) ||
@@ -72,8 +64,9 @@ namespace Quantum.Ava
         {
             if (result.IsHit)
             {
-                NotifyHitboxHit(f, attacker, result.AttackProperties.AttackID, result.HitNum);
-                IncomingHandler.HandleIncoming(f, attackee, result.AttackProperties);
+                var properties = f.FindAsset(result.AttackProperties);
+                NotifyHitboxHit(f, attacker, properties.AttackID, result.HitNum);
+                IncomingHandler.HandleIncoming(f, attackee, properties);
             }
             else if (result.IsProximity)
             {

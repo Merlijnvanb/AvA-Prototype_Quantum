@@ -56,6 +56,7 @@ namespace Quantum {
     CROUCH_LIGHT,
     CROUCH_MEDIUM,
     CROUCH_HEAVY,
+    FORWARD_MEDIUM,
   }
   public enum StateID : int {
     STAND,
@@ -75,10 +76,12 @@ namespace Quantum {
     CROUCH_MEDIUM,
     CROUCH_HEAVY,
     CROUCH_SPECIAL,
+    FORWARD_MEDIUM,
     PROXIMITY_STANDING,
     PROXIMITY_CROUCHING,
     BLOCK_STANDING,
     BLOCK_CROUCHING,
+    CROUCH_BACK,
     HITSTUN,
     LAUNCHED,
     HARD_KNOCKDOWN,
@@ -440,6 +443,36 @@ namespace Quantum {
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (BitSet6*)ptr;
         serializer.Stream.SerializeBuffer(&p->Bits[0], 1);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct AttackResult {
+    public const Int32 SIZE = 24;
+    public const Int32 ALIGNMENT = 8;
+    [FieldOffset(4)]
+    public QBoolean IsHit;
+    [FieldOffset(8)]
+    public QBoolean IsProximity;
+    [FieldOffset(16)]
+    public AssetRef<AttackProperties> AttackProperties;
+    [FieldOffset(0)]
+    public Int32 HitNum;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 13147;
+        hash = hash * 31 + IsHit.GetHashCode();
+        hash = hash * 31 + IsProximity.GetHashCode();
+        hash = hash * 31 + AttackProperties.GetHashCode();
+        hash = hash * 31 + HitNum.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (AttackResult*)ptr;
+        serializer.Stream.Serialize(&p->HitNum);
+        QBoolean.Serialize(&p->IsHit, serializer);
+        QBoolean.Serialize(&p->IsProximity, serializer);
+        AssetRef.Serialize(&p->AttackProperties, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -1251,6 +1284,7 @@ namespace Quantum {
       typeRegistry.Register(typeof(AssetGuid), AssetGuid.SIZE);
       typeRegistry.Register(typeof(AssetRef), AssetRef.SIZE);
       typeRegistry.Register(typeof(Quantum.AttackID), 4);
+      typeRegistry.Register(typeof(Quantum.AttackResult), Quantum.AttackResult.SIZE);
       typeRegistry.Register(typeof(Quantum.BitSet1024), Quantum.BitSet1024.SIZE);
       typeRegistry.Register(typeof(Quantum.BitSet128), Quantum.BitSet128.SIZE);
       typeRegistry.Register(typeof(Quantum.BitSet2048), Quantum.BitSet2048.SIZE);

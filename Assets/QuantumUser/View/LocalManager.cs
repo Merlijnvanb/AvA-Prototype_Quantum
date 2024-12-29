@@ -1,7 +1,6 @@
 using Photon.Client.StructWrapping;
 using UnityEngine;
 using Quantum;
-using Unity.Cinemachine;
 using Unity.VisualScripting;
 
 public class LocalManager : MonoBehaviour

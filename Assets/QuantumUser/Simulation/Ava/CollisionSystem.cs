@@ -19,7 +19,7 @@ namespace Quantum.Ava
             FixWallClip(f, fighters);
             AgainstDistance(f, fighters);
             
-            Log.Debug(FPMath.Abs(fighters[0]->Position.X - fighters[1]->Position.X));
+            //Log.Debug(FPMath.Abs(fighters[0]->Position.X - fighters[1]->Position.X));
         }
 
         private void AgainstWall(Frame f, FighterData*[] fighters)

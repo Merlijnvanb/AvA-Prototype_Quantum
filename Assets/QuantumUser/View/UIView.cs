@@ -4,7 +4,7 @@ namespace Quantum.Ava
     using Quantum;
     using TMPro;
 
-    public class UIView : QuantumSceneViewComponent
+    public unsafe class UIView : QuantumSceneViewComponent
     {
         [Header("Debug UI")]
         public TextMeshProUGUI P1CurrentState;
@@ -23,6 +23,8 @@ namespace Quantum.Ava
         public TextMeshProUGUI P1Score;
         public TextMeshProUGUI P2Score;
 
+        public TextMeshProUGUI Timer;
+
         void Start()
         {
             QuantumEvent.Subscribe<EventUpdateUI>(this, UpdateUI);
@@ -32,6 +34,8 @@ namespace Quantum.Ava
         {
             P1Score.SetText("" + data.F1Score);
             P2Score.SetText("" + data.F2Score);
+            
+            Timer.SetText("" + PredictedFrame.Global->RoundTimer / 60);
 
             if (!PredictedFrame.TryGet<FighterData>(data.Fighter1, out var fd1) ||
                 !PredictedFrame.TryGet<FighterData>(data.Fighter2, out var fd2))

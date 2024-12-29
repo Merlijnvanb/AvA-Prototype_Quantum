@@ -52,3 +52,11 @@ struct BoxBase
     FPVector2 RectPos;
     FPVector2 RectWH;
 }
+
+struct AttackResult
+{
+     bool IsHit;
+     bool IsProximity;
+     asset_ref<AttackProperties> AttackProperties;
+     int HitNum;
+}

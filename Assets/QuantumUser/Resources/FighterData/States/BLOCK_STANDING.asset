@@ -16,7 +16,7 @@ MonoBehaviour:
     Path: QuantumUser/Resources/FighterData/States/BLOCK_STANDING
     Guid:
       Value: 452889102136609052
-  StateID: 19
+  StateID: 20
   IsGuardState: 1
   IsMovementState: 0
   GuardType: 0

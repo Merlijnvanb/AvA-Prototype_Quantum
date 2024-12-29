@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9f5bbd7015499e43ab6264ee125a7c1, type: 3}
-  m_Name: BLOCK_CROUCHING
+  m_Name: PROXIMITY_STANDING
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/FighterData/States/BLOCK_CROUCHING
+    Path: QuantumUser/Resources/FighterData/States/PROXIMITY_STANDING
     Guid:
-      Value: 484263040408239574
-  StateID: 21
+      Value: 441091583643903232
+  StateID: 18
   IsGuardState: 1
   IsMovementState: 0
-  GuardType: 1
+  GuardType: 0
   MovementType: 0
-  FrameCount: 1
+  FrameCount: 0
   IsLoop: 0
   LoopFromFrame: 0
-  IsAlwaysCancelable: 0
+  IsAlwaysCancelable: 1
   Hitboxes: []
   Hurtboxes:
   - StartEndFrame:
       X:
         RawValue: 0
       Y:
-        RawValue: 65536
+        RawValue: 0
     UseBaseRect: 1
     RectPos:
       X:
@@ -50,7 +50,7 @@ MonoBehaviour:
       X:
         RawValue: 0
       Y:
-        RawValue: 65536
+        RawValue: 0
     UseBaseRect: 1
     RectPos:
       X:
