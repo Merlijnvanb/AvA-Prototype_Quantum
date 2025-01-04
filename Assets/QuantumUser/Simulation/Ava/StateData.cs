@@ -10,7 +10,7 @@ namespace Quantum
         public bool IsMovementState;
         public GuardType GuardType;
         public MovementType MovementType;
-        public int FrameCount;
+        public int FrameCount = 1;
         public bool IsLoop;
         public int LoopFromFrame;
         public bool IsAlwaysCancelable;
@@ -72,7 +72,7 @@ namespace Quantum
     
     public abstract class FrameDataBase
     {
-        public FPVector2 StartEndFrame;
+        public FPVector2 StartEndFrame = new FPVector2(1, 1);
     }
 
     [System.Serializable]

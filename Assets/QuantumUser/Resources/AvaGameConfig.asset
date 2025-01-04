@@ -25,10 +25,8 @@ MonoBehaviour:
   DownwardForce:
     RawValue: 851968
   FrictionCoefficient:
-    RawValue: 21845
+    RawValue: 26214
   SideSwitchThreshold:
     RawValue: 6554
-  PushbackTransferValue:
-    RawValue: 32768
   PreRoundTimer: 180
   RoundTimer: 3000

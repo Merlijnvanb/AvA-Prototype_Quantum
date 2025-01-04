@@ -21,10 +21,27 @@ namespace Quantum.Ava
             f.Global->RoundTimer = gameConfig.RoundTimer;
             f.Global->Fighter1Score = 0;
             f.Global->Fighter2Score = 0;
+            f.Global->HitstopFrames = 0;
+            f.Global->PauseSimulation = false;
+            f.Global->AdvanceOneFrame = false;
         }
         
         public override void Update(Frame f)
         {
+            Log.Debug(f.Global->PauseSimulation);
+            
+            if (f.Global->PauseSimulation)
+            {
+                if (!f.Global->AdvanceOneFrame)
+                    return;
+            }
+            
+            if (f.Global->HitstopFrames > 0)
+            {
+                f.Global->HitstopFrames--;
+                return;
+            }
+            
             if (f.Global->PreRoundTimer > 0)
                 f.Global->PreRoundTimer--;
             else if (f.Global->RoundTimer > 0)

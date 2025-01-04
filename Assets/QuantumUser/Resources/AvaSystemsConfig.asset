@@ -47,6 +47,11 @@ MonoBehaviour:
     StartDisabled: 0
     Children: []
   - SystemType:
+      AssemblyQualifiedName: Quantum.Ava.CommandSystem, Quantum.Simulation
+    SystemName: 
+    StartDisabled: 0
+    Children: []
+  - SystemType:
       AssemblyQualifiedName: Quantum.Ava.GameSystem, Quantum.Simulation
     SystemName: 
     StartDisabled: 0

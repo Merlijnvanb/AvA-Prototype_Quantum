@@ -20,6 +20,7 @@ MonoBehaviour:
   BaseDamage: 100
   HitstunFrames: 25
   BlockstunFrames: 20
+  HitstopFrames: 10
   PushBackOnHit:
     X:
       RawValue: -491520

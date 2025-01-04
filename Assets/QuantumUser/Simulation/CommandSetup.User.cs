@@ -1,4 +1,6 @@
-﻿namespace Quantum
+﻿using Quantum.Ava;
+
+namespace Quantum
 {
     using System.Collections.Generic;
     using Photon.Deterministic;
@@ -7,8 +9,8 @@
     {
         static partial void AddCommandFactoriesUser(ICollection<IDeterministicCommandFactory> factories, RuntimeConfig gameConfig, SimulationConfig simulationConfig)
         {
-            // Add or remove commands to the collection.
-            // factories.Add(new NavMeshAgentTestSystem.RunTest());
+            factories.Add(new DeterministicCommandPool<PauseSimulation>());
+            factories.Add(new DeterministicCommandPool<AdvanceOneFrame>());
         }
     }
 }

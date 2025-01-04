@@ -29,7 +29,7 @@ MonoBehaviour:
   Hurtboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
         RawValue: 65536
     UseBaseRect: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
   Pushboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
         RawValue: 65536
     UseBaseRect: 1

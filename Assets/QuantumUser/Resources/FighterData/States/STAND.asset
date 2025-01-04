@@ -21,7 +21,7 @@ MonoBehaviour:
   IsMovementState: 0
   GuardType: 0
   MovementType: 0
-  FrameCount: 0
+  FrameCount: 1
   IsLoop: 0
   LoopFromFrame: 0
   IsAlwaysCancelable: 1
@@ -29,9 +29,9 @@ MonoBehaviour:
   Hurtboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
-        RawValue: 0
+        RawValue: 65536
     UseBaseRect: 1
     RectPos:
       X:
@@ -48,9 +48,9 @@ MonoBehaviour:
   Pushboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
-        RawValue: 0
+        RawValue: 65536
     UseBaseRect: 1
     RectPos:
       X:

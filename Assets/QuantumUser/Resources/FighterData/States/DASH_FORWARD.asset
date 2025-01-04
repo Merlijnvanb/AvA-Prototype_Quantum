@@ -29,7 +29,7 @@ MonoBehaviour:
   Hurtboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
         RawValue: 983040
     UseBaseRect: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
   Pushboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
         RawValue: 983040
     UseBaseRect: 1
@@ -65,19 +65,19 @@ MonoBehaviour:
   Movements:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
-        RawValue: 131072
-    Velocity:
-      X:
-        RawValue: 0
-      Y:
-        RawValue: 0
-  - StartEndFrame:
-      X:
         RawValue: 196608
+    Velocity:
+      X:
+        RawValue: 0
       Y:
-        RawValue: 524288
+        RawValue: 0
+  - StartEndFrame:
+      X:
+        RawValue: 262144
+      Y:
+        RawValue: 589824
     Velocity:
       X:
         RawValue: 524288
@@ -85,9 +85,9 @@ MonoBehaviour:
         RawValue: 0
   - StartEndFrame:
       X:
-        RawValue: 589824
+        RawValue: 655360
       Y:
-        RawValue: 851968
+        RawValue: 917504
     Velocity:
       X:
         RawValue: 98304
@@ -95,7 +95,7 @@ MonoBehaviour:
         RawValue: 0
   - StartEndFrame:
       X:
-        RawValue: 917504
+        RawValue: 983040
       Y:
         RawValue: 983040
     Velocity:

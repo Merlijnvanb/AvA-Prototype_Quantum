@@ -34,14 +34,16 @@ namespace Quantum.Ava
                 fd->Position.X += fd->Pushback.X * deltaTime * sign;
                 fd->Position.Y += fd->Pushback.Y * deltaTime;
             }
+            
+            if (fd->Position.Y < 0)
+                fd->Position.Y = 0;
         }
 
         private static void CalculateVelocity(Frame f, FighterData* fd, FighterConstants constants)
         {
             if (fd->Position.Y <= 0)
             {
-                if (fd->Velocity.X != 0) fd->Velocity.X -= f.Global->FrictionCoefficient * fd->Velocity.X;
-                if (FPMath.Abs(fd->Velocity.X) < FP._0_01) fd->Velocity.X = 0;
+                fd->Velocity.X = 0;
                 if (fd->Velocity.Y < 0) fd->Velocity.Y = 0;
             }
 

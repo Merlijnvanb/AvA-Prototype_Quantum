@@ -11,7 +11,7 @@ namespace Quantum.Ava
             var fData = filter.FighterData;
             var fConstants = f.FindAsset(fData->Constants);
             
-            Log.Debug(fData->ProximityGuard);
+            //Log.Debug(fData->ProximityGuard);
 
             if (CheckAttackState(f, fData, fConstants) ||
                 CheckJumpState(f, fData, fConstants, f.Global->JumpAlterFrames) ||
@@ -125,7 +125,7 @@ namespace Quantum.Ava
 
         private static bool RequestState(Frame f, FighterData* fd, FighterConstants fc, StateID stateID)
         {
-            if (fd->StateFrame >= fc.States[fd->CurrentState].FrameCount)
+            if (fd->StateFrame > fc.States[fd->CurrentState].FrameCount)
             {
                 SetCurrentState(f, fd, stateID);
                 return true;
@@ -143,7 +143,7 @@ namespace Quantum.Ava
             return false;
         }
 
-        public static void SetCurrentState(Frame f, FighterData* fd, StateID stateID, int frame = 0)
+        public static void SetCurrentState(Frame f, FighterData* fd, StateID stateID, int frame = 1)
         {
             fd->CurrentState = stateID;
             fd->StateFrame = frame;

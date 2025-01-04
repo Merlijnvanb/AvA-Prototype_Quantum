@@ -42,5 +42,14 @@ namespace Quantum.Ava
 
             return i;
         }
+
+        void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F9))
+                QuantumRunner.Default.Game.SendCommand(new PauseSimulation());
+            
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F10))
+                QuantumRunner.Default.Game.SendCommand(new AdvanceOneFrame());
+        }
     }
 }

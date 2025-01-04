@@ -684,7 +684,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct _globals_ {
-    public const Int32 SIZE = 1224;
+    public const Int32 SIZE = 1232;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public AssetRef<Map> Map;
@@ -711,34 +711,40 @@ namespace Quantum {
     private fixed Byte _input_[576];
     [FieldOffset(1128)]
     public BitSet6 PlayerLastConnectionState;
-    [FieldOffset(1160)]
+    [FieldOffset(1168)]
     public QBoolean ParseInputs;
-    [FieldOffset(1216)]
+    [FieldOffset(1224)]
     public FP StageWidth;
-    [FieldOffset(1200)]
+    [FieldOffset(1208)]
     public FP MaxFighterDistance;
     [FieldOffset(1136)]
     public Int32 DashAllowFrames;
-    [FieldOffset(1148)]
-    public Int32 JumpAlterFrames;
-    [FieldOffset(1184)]
-    public FP DownwardForce;
-    [FieldOffset(1192)]
-    public FP FrictionCoefficient;
-    [FieldOffset(1208)]
-    public FP SideSwitchThreshold;
     [FieldOffset(1152)]
-    public Int32 PreRoundTimer;
+    public Int32 JumpAlterFrames;
+    [FieldOffset(1192)]
+    public FP DownwardForce;
+    [FieldOffset(1200)]
+    public FP FrictionCoefficient;
+    [FieldOffset(1216)]
+    public FP SideSwitchThreshold;
     [FieldOffset(1156)]
+    public Int32 PreRoundTimer;
+    [FieldOffset(1160)]
     public Int32 RoundTimer;
-    [FieldOffset(1168)]
-    public EntityRef Fighter1;
     [FieldOffset(1176)]
+    public EntityRef Fighter1;
+    [FieldOffset(1184)]
     public EntityRef Fighter2;
     [FieldOffset(1140)]
     public Int32 Fighter1Score;
     [FieldOffset(1144)]
     public Int32 Fighter2Score;
+    [FieldOffset(1148)]
+    public Int32 HitstopFrames;
+    [FieldOffset(1172)]
+    public QBoolean PauseSimulation;
+    [FieldOffset(1164)]
+    public QBoolean AdvanceOneFrame;
     public FixedArray<Input> input {
       get {
         fixed (byte* p = _input_) { return new FixedArray<Input>(p, 96, 6); }
@@ -773,6 +779,9 @@ namespace Quantum {
         hash = hash * 31 + Fighter2.GetHashCode();
         hash = hash * 31 + Fighter1Score.GetHashCode();
         hash = hash * 31 + Fighter2Score.GetHashCode();
+        hash = hash * 31 + HitstopFrames.GetHashCode();
+        hash = hash * 31 + PauseSimulation.GetHashCode();
+        hash = hash * 31 + AdvanceOneFrame.GetHashCode();
         return hash;
       }
     }
@@ -793,10 +802,13 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->DashAllowFrames);
         serializer.Stream.Serialize(&p->Fighter1Score);
         serializer.Stream.Serialize(&p->Fighter2Score);
+        serializer.Stream.Serialize(&p->HitstopFrames);
         serializer.Stream.Serialize(&p->JumpAlterFrames);
         serializer.Stream.Serialize(&p->PreRoundTimer);
         serializer.Stream.Serialize(&p->RoundTimer);
+        QBoolean.Serialize(&p->AdvanceOneFrame, serializer);
         QBoolean.Serialize(&p->ParseInputs, serializer);
+        QBoolean.Serialize(&p->PauseSimulation, serializer);
         EntityRef.Serialize(&p->Fighter1, serializer);
         EntityRef.Serialize(&p->Fighter2, serializer);
         FP.Serialize(&p->DownwardForce, serializer);

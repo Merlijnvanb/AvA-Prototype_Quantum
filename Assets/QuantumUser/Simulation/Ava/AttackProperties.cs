@@ -20,6 +20,7 @@ namespace Quantum
         [Header("FrameData")]
         public int HitstunFrames;
         public int BlockstunFrames;
+        public int HitstopFrames;
 
         [Header("Pushback")]
         public FPVector2 PushBackOnHit;

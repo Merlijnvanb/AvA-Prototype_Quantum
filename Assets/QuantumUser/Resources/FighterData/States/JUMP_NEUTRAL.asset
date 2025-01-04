@@ -21,7 +21,7 @@ MonoBehaviour:
   IsMovementState: 1
   GuardType: 0
   MovementType: 1
-  FrameCount: 45
+  FrameCount: 35
   IsLoop: 0
   LoopFromFrame: 0
   IsAlwaysCancelable: 0
@@ -29,9 +29,9 @@ MonoBehaviour:
   Hurtboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
-        RawValue: 2949120
+        RawValue: 2293760
     UseBaseRect: 1
     RectPos:
       X:
@@ -48,9 +48,9 @@ MonoBehaviour:
   Pushboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
-        RawValue: 2949120
+        RawValue: 2293760
     UseBaseRect: 1
     RectPos:
       X:
@@ -62,4 +62,44 @@ MonoBehaviour:
         RawValue: 0
       Y:
         RawValue: 0
-  Movements: []
+  Movements:
+  - StartEndFrame:
+      X:
+        RawValue: 327680
+      Y:
+        RawValue: 327680
+    Velocity:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 327680
+  - StartEndFrame:
+      X:
+        RawValue: 458752
+      Y:
+        RawValue: 524288
+    Velocity:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: -98304
+  - StartEndFrame:
+      X:
+        RawValue: 589824
+      Y:
+        RawValue: 1703936
+    Velocity:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 6554
+  - StartEndFrame:
+      X:
+        RawValue: 1769472
+      Y:
+        RawValue: 2293760
+    Velocity:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: -32768

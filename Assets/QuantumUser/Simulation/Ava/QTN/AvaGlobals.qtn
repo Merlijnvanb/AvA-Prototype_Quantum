@@ -20,4 +20,9 @@ global
     
     int Fighter1Score;
     int Fighter2Score;
+    
+    int HitstopFrames;
+    
+    bool PauseSimulation;
+    bool AdvanceOneFrame;
 }

@@ -67,6 +67,7 @@ namespace Quantum.Ava
                 var properties = f.FindAsset(result.AttackProperties);
                 NotifyHitboxHit(f, attacker, properties.AttackID, result.HitNum);
                 IncomingHandler.HandleIncoming(f, attackee, properties);
+                f.Global->HitstopFrames = properties.HitstopFrames;
             }
             else if (result.IsProximity)
             {

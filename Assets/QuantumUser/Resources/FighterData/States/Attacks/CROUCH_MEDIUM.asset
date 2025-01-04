@@ -28,7 +28,7 @@ MonoBehaviour:
   Hitboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
         RawValue: 393216
     RectPos:
@@ -63,7 +63,7 @@ MonoBehaviour:
   Hurtboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
         RawValue: 1441792
     UseBaseRect: 1
@@ -82,7 +82,7 @@ MonoBehaviour:
   Pushboxes:
   - StartEndFrame:
       X:
-        RawValue: 0
+        RawValue: 65536
       Y:
         RawValue: 1441792
     UseBaseRect: 1

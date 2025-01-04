@@ -15,6 +15,19 @@ namespace Quantum.Ava
         
         public override void Update(Frame f, ref Filter filter)
         {
+            if (f.Global->PauseSimulation)
+            {
+                if (!f.Global->AdvanceOneFrame)
+                    return;
+                
+                f.Global->AdvanceOneFrame = false;
+            }
+            
+            if (f.Global->HitstopFrames > 0)
+            {
+                return;
+            }
+            
             UpdateFighters(f, ref filter);
             
             Log.LogLevel = LogType.Debug;
