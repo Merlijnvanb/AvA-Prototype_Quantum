@@ -6,7 +6,7 @@ namespace Quantum.Ava
     [Preserve]
     public unsafe class MovementHandler
     {
-        public static void UpdateMovement(Frame f, ref FighterSystem.Filter filter)
+        public static void UpdateMovement(Frame f, ref FighterHandler.Filter filter)
         {
             var fd = filter.FighterData;
             var constants = f.FindAsset<FighterConstants>(fd->Constants);

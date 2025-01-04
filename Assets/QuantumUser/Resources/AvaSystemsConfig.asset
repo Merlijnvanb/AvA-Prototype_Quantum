@@ -56,18 +56,3 @@ MonoBehaviour:
     SystemName: 
     StartDisabled: 0
     Children: []
-  - SystemType:
-      AssemblyQualifiedName: Quantum.Ava.FighterSystem, Quantum.Simulation
-    SystemName: 
-    StartDisabled: 0
-    Children: []
-  - SystemType:
-      AssemblyQualifiedName: Quantum.Ava.CollisionSystem, Quantum.Simulation
-    SystemName: 
-    StartDisabled: 0
-    Children: []
-  - SystemType:
-      AssemblyQualifiedName: Quantum.Ava.HitRegSystem, Quantum.Simulation
-    SystemName: 
-    StartDisabled: 0
-    Children: []

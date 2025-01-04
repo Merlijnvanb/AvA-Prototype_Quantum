@@ -6,7 +6,7 @@ namespace Quantum.Ava
     [Preserve]
     public unsafe class InputManager
     {
-        public static void UpdateInputs(Frame f, ref FighterSystem.Filter filter)
+        public static void UpdateInputs(Frame f, ref FighterHandler.Filter filter)
         {
             var fData = filter.FighterData;
             fData->InputHeadIndex = (fData->InputHeadIndex + 1) % fData->InputHistory.Length;

@@ -8,7 +8,7 @@ namespace Quantum.Ava
     [Preserve]
     public unsafe class PlayerInitializer : SystemSignalsOnly, ISignalOnPlayerAdded
     {
-        public override void OnInit(Frame f) // add logic for always having 2 fighter instances, even without players joining
+        public override void OnInit(Frame f)
         {
             for (int i = 1; i < 3; i++)
             {
@@ -31,7 +31,7 @@ namespace Quantum.Ava
                 fData->HitStun = 0;
                 fData->BlockStun = 0;
                 fData->CurrentState = StateID.STAND;
-                fData->StateFrame = 0;
+                fData->StateFrame = 1;
                 fData->HitboxList = f.AllocateList<Hitbox>();
                 fData->HurtboxList = f.AllocateList<Hurtbox>();
                 fData->Pushbox = new Pushbox();

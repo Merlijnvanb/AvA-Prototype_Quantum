@@ -6,7 +6,7 @@ namespace Quantum.Ava
     [Preserve]
     public unsafe class BoxManager
     {
-        public static void UpdateBoxes(Frame f, ref FighterSystem.Filter filter)
+        public static void UpdateBoxes(Frame f, ref FighterHandler.Filter filter)
         {
             var fd = filter.FighterData;
             var constants = f.FindAsset<FighterConstants>(fd->Constants);

@@ -34,6 +34,8 @@ namespace Quantum.Ava
             {
                 if (!f.Global->AdvanceOneFrame)
                     return;
+                
+                f.Global->AdvanceOneFrame = false;
             }
             
             if (f.Global->HitstopFrames > 0)
@@ -59,7 +61,25 @@ namespace Quantum.Ava
                 TimeOut(f);
             }
             
+            var filter1 = new FighterHandler.Filter()
+            {
+                Entity = f.Global->Fighter1,
+                FighterData = f.Unsafe.GetPointer<FighterData>(f.Global->Fighter1)
+            };
+
+            var filter2 = new FighterHandler.Filter()
+            {
+                Entity = f.Global->Fighter2,
+                FighterData = f.Unsafe.GetPointer<FighterData>(f.Global->Fighter2)
+            };
+            
             CheckSides(f);
+            
+            FighterHandler.UpdateFighter(f, ref filter1);
+            FighterHandler.UpdateFighter(f, ref filter2);
+            CollisionHandler.UpdateCollision(f);
+            HitRegHandler.UpdateHitReg(f);
+            
             f.Events.UpdateUI(f.Global->Fighter1, f.Global->Fighter2, f.Global->Fighter1Score, f.Global->Fighter2Score);
         }
         

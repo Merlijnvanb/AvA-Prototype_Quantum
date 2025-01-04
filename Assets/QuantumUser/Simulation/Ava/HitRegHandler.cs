@@ -5,9 +5,9 @@ namespace Quantum.Ava
     using UnityEngine.Scripting;
     
     [Preserve]
-    public unsafe class HitRegSystem : SystemMainThread
+    public unsafe class HitRegHandler
     {
-        public override void Update(Frame f)
+        public static void UpdateHitReg(Frame f)
         {
             if (!f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter1, out var fd1) ||
                 !f.Unsafe.TryGetPointer<FighterData>(f.Global->Fighter2, out var fd2))
@@ -19,7 +19,7 @@ namespace Quantum.Ava
             ParseResult(f, fd2, fd1, fd2AttackResult);
         }
 
-        private AttackResult GetResult(Frame f, FighterData* attacker, FighterData* attackee)
+        private static AttackResult GetResult(Frame f, FighterData* attacker, FighterData* attackee)
         {
             var hitboxes = f.ResolveList(attacker->HitboxList);
             var hurtboxes = f.ResolveList(attackee->HurtboxList);
@@ -60,7 +60,7 @@ namespace Quantum.Ava
             return result;
         }
 
-        private void ParseResult(Frame f, FighterData* attacker, FighterData* attackee, AttackResult result)
+        private static void ParseResult(Frame f, FighterData* attacker, FighterData* attackee, AttackResult result)
         {
             if (result.IsHit)
             {
@@ -75,7 +75,7 @@ namespace Quantum.Ava
             }
         }
 
-        private bool HitboxCanHit(Frame f, FighterData* fd, Hitbox hitbox)
+        private static bool HitboxCanHit(Frame f, FighterData* fd, Hitbox hitbox)
         {
             var registry = f.ResolveDictionary(fd->AttackRegistry);
             
@@ -87,7 +87,7 @@ namespace Quantum.Ava
             return !registry.TryGetValue(attackID, out var num) && num == hitbox.HitNum;
         }
 
-        private void NotifyHitboxHit(Frame f, FighterData* fd, AttackID id, int hitNum)
+        private static void NotifyHitboxHit(Frame f, FighterData* fd, AttackID id, int hitNum)
         {
             var registry = f.ResolveDictionary(fd->AttackRegistry);
             registry.Add(id, hitNum);

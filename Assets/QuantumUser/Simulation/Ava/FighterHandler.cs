@@ -4,7 +4,7 @@ namespace Quantum.Ava
     using UnityEngine.Scripting;
 
     [Preserve]
-    public unsafe class FighterSystem : SystemMainThreadFilter<FighterSystem.Filter>
+    public unsafe class FighterHandler
     {
         public struct Filter
         {
@@ -13,28 +13,7 @@ namespace Quantum.Ava
             public FighterData* FighterData;
         }
         
-        public override void Update(Frame f, ref Filter filter)
-        {
-            if (f.Global->PauseSimulation)
-            {
-                if (!f.Global->AdvanceOneFrame)
-                    return;
-                
-                f.Global->AdvanceOneFrame = false;
-            }
-            
-            if (f.Global->HitstopFrames > 0)
-            {
-                return;
-            }
-            
-            UpdateFighters(f, ref filter);
-            
-            Log.LogLevel = LogType.Debug;
-            //Log.Debug(f.ResolveList(filter.FighterData->HurtboxList).Count);
-        }
-
-        private void UpdateFighters(Frame f, ref Filter filter)
+        public static void UpdateFighter(Frame f, ref Filter filter)
         {
             UpdateFacing(f, ref filter);
             IncrementState(f, ref filter);
@@ -45,7 +24,7 @@ namespace Quantum.Ava
             BoxManager.UpdateBoxes(f, ref filter);
         }
 
-        private void UpdateFacing(Frame f, ref Filter filter)
+        private static void UpdateFacing(Frame f, ref Filter filter)
         {
             var fd = filter.FighterData;
             var constants = f.FindAsset<FighterConstants>(fd->Constants);
@@ -58,7 +37,7 @@ namespace Quantum.Ava
             }
         }
 
-        private void IncrementState(Frame f, ref Filter filter)
+        private static void IncrementState(Frame f, ref Filter filter)
         {
             var fd = filter.FighterData;
 

@@ -5,9 +5,9 @@ namespace Quantum.Ava
     using UnityEngine.Scripting;
     
     [Preserve]
-    public unsafe class CollisionSystem : SystemMainThread
+    public unsafe class CollisionHandler
     {
-        public override void Update(Frame f)
+        public static void UpdateCollision(Frame f)
         {
             var fighters = new FighterData*[2];
             
@@ -22,7 +22,7 @@ namespace Quantum.Ava
             //Log.Debug(FPMath.Abs(fighters[0]->Position.X - fighters[1]->Position.X));
         }
 
-        private void AgainstWall(Frame f, FighterData*[] fighters)
+        private static void AgainstWall(Frame f, FighterData*[] fighters)
         {
             var leftWall = f.Global->StageWidth * -1 / 2;
             var rightWall = f.Global->StageWidth / 2;
@@ -55,7 +55,7 @@ namespace Quantum.Ava
             }
         }
 
-        private void AgainstFighter(Frame f, FighterData*[] fighters)
+        private static void AgainstFighter(Frame f, FighterData*[] fighters)
         {
             if (fighters[0] == null || fighters[1] == null)
                 return;
@@ -78,7 +78,7 @@ namespace Quantum.Ava
             }
         }
 
-        private void FixWallClip(Frame f, FighterData*[] fighters)
+        private static void FixWallClip(Frame f, FighterData*[] fighters)
         {
             var leftWall = f.Global->StageWidth * -1 / 2;
             var rightWall = f.Global->StageWidth / 2;
@@ -103,7 +103,7 @@ namespace Quantum.Ava
             }
         }
 
-        private void AgainstDistance(Frame f, FighterData*[] fighters)
+        private static void AgainstDistance(Frame f, FighterData*[] fighters)
         {
             if (fighters[0] == null || fighters[1] == null)
                 return;
@@ -124,7 +124,7 @@ namespace Quantum.Ava
             }
         }
 
-        private void ApplyPosition(Frame f, FighterData* fd, FPVector2 pos)
+        private static void ApplyPosition(Frame f, FighterData* fd, FPVector2 pos)
         {
             fd->Position.X += pos.X;
             fd->Position.Y += pos.Y;

@@ -6,7 +6,7 @@ namespace Quantum.Ava
     [Preserve]
     public unsafe class StateManager
     {
-        public static void UpdateState(Frame f, ref FighterSystem.Filter filter)
+        public static void UpdateState(Frame f, ref FighterHandler.Filter filter)
         {
             var fData = filter.FighterData;
             var fConstants = f.FindAsset(fData->Constants);
@@ -62,7 +62,7 @@ namespace Quantum.Ava
             if (currentInput.Up)
             {
                 RequestState(f, fd, fc, StateID.JUMP_NEUTRAL);
-                if (fd->CurrentState == StateID.JUMP_NEUTRAL && fd->StateFrame < jumpAlterFrames)
+                if (fd->CurrentState == StateID.JUMP_NEUTRAL && fd->StateFrame <= jumpAlterFrames)
                     SetCurrentState(f, fd, InputUtils.CheckJumpType(fd, currentInput), fd->StateFrame);
                 return true;
             }
